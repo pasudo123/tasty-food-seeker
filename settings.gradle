@@ -1,0 +1,6 @@
+rootProject.name = 'tasty-food-seeker'
+
+include('tasty-food-seeker-web')
+include('tasty-food-seeker-crawl')
+include('tasty-food-seeker-batch')
+include('tasty-food-seeker-domain')
