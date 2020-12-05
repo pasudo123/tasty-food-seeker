@@ -11,18 +11,19 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {
+        TastyFoodSeekExplorer.class,
         TastyFoodSeekCrawler.class
 })
 @Import(SeleniumConfiguration.class)
 @DisplayName("TastyFoodSeekCrawler 는")
-public class TastyFoodSeekCrawlerTest {
+public class TastyFoodSeekExplorerTest {
 
     @Autowired
-    private TastyFoodSeekCrawler crawler;
+    private TastyFoodSeekExplorer explorer;
 
     @Test
     @DisplayName("크롤을 진행한다.")
-    public void doCrawlTest() {
-        crawler.doCrawling();
+    public void doExploreTest() {
+        explorer.doExploring(2020, 10);
     }
 }

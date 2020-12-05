@@ -34,7 +34,10 @@ public class SeleniumConfiguration {
     @Bean
     public WebDriver prodWebDriver() {
         try {
+            // headless 설정 및 selenium container 이용
             final ChromeOptions opt = new ChromeOptions();
+            opt.addArguments("--headless");
+            
             final WebDriver driver = new RemoteWebDriver(new URL(hostUrl), opt);
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
