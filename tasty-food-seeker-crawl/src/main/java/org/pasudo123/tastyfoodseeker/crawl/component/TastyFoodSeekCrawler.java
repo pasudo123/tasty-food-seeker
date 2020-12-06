@@ -1,13 +1,12 @@
 package org.pasudo123.tastyfoodseeker.crawl.component;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.pasudo123.tastyfoodseeker.crawl.constants.TastyFoodSeekXPath;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageDetailPage;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocation;
-import org.pasudo123.tastyfoodseeker.crawl.service.CrawlDataSaveService;
+import org.pasudo123.tastyfoodseeker.crawl.service.CrawlDataPipelineService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.List;
 public class TastyFoodSeekCrawler {
 
     private final WebDriver webDriver;
-    private final CrawlDataSaveService crawlDataSaveService;
+    private final CrawlDataPipelineService crawlDataPipelineService;
 
     public void doCrawl(final String currentViewingPageUrl) {
         webDriver.get(currentViewingPageUrl);
@@ -39,7 +38,7 @@ public class TastyFoodSeekCrawler {
                     });
 
             // 크롤링한 데이터를 기반으로 client 에게 요청보내도록 한다.
-            crawlDataSaveService.saveAll(usageLocations);
+            crawlDataPipelineService.execute(usageLocations);
 
             // webDriver 는 navigate 시, 이전요소들은 만료되기때문에 다시 갱신이 필요하다.
             historyBack();

@@ -21,16 +21,16 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SpringBootTest(classes = {
-        CrawlDataSaveService.class,
+        CrawlDataPipelineService.class,
         NaverSearchClient.class
 })
 @ExtendWith(SpringExtension.class)
 @Import(WebClientConfiguration.class)
 @DisplayName("CrawlDataSaveService 는")
-class CrawlDataSaveServiceTest {
+class CrawlDataPipelineServiceTest {
 
     @Autowired
-    private CrawlDataSaveService crawlDataSaveService;
+    private CrawlDataPipelineService crawlDataPipelineService;
 
     @Autowired
     private NaverSearchClient naverSearchClient;
@@ -41,7 +41,7 @@ class CrawlDataSaveServiceTest {
     public void saveAllTest(final List<UsageLocation> usageLocations) {
 
         // when
-        crawlDataSaveService.saveAll(usageLocations);
+        crawlDataPipelineService.execute(usageLocations);
 
 
     }
