@@ -21,7 +21,7 @@ public class UsageLocation {
         return (!this.location.isEmpty() && !"-".equals(this.location));
     }
 
-    public RestaurantInfo toRestaurantInfo() {
+    public UsageLocationInfo toRestaurantInfo() {
         final Matcher matcher = PATTERN_BRACKET.matcher(location);
 
         if(matcher.find()) {
@@ -30,10 +30,10 @@ public class UsageLocation {
                     .replaceAll("\\(", Strings.EMPTY)
                     .replaceAll("\\)", Strings.EMPTY);
 
-            return new RestaurantInfo(name, address);
+            return new UsageLocationInfo(name, address);
         }
 
         // 괄호가 없는 경우도 있을 수 있기 때문.
-        return new RestaurantInfo(location, Strings.EMPTY);
+        return new UsageLocationInfo(location, Strings.EMPTY);
     }
 }

@@ -10,6 +10,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
 	compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
 
+	// [text similarity]
+	compile 'info.debatty:java-string-similarity:2.0.0'
+
 	// [reactive programming]
 	compile 'org.springframework.boot:spring-boot-starter-webflux'
 	compile 'org.projectreactor:reactor-spring:1.0.1.RELEASE'

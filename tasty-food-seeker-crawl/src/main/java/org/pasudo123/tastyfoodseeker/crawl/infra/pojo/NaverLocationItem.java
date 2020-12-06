@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.logging.log4j.util.Strings;
+import org.pasudo123.tastyfoodseeker.domain.restaurant.model.Restaurant;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,5 +37,21 @@ public class NaverLocationItem {
             title = title.replaceAll(expr, Strings.EMPTY);
         }
         this.title = title;
+    }
+
+    public Restaurant toRestaurantEntity() {
+
+        final String additionalInfo = "{"
+                .concat("\"mapx\"").concat(mapx).concat(",")
+                .concat("\"mapy\"").concat(mapy)
+                .concat("}");
+
+        return Restaurant.builder()
+                .name(title)
+                .category(category)
+                .address(address)
+                .loadAddress(roadAddress)
+                .additionalInfo(additionalInfo)
+                .build();
     }
 }

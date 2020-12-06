@@ -26,7 +26,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 })
 @ExtendWith(SpringExtension.class)
 @Import(WebClientConfiguration.class)
-@DisplayName("CrawlDataSaveService 는")
+@DisplayName("크롤링 데이터 파이프라이닝 서비스는")
 class CrawlDataPipelineServiceTest {
 
     @Autowired
@@ -37,8 +37,8 @@ class CrawlDataPipelineServiceTest {
 
     @MethodSource("provideUsageLocations")
     @ParameterizedTest
-    @DisplayName("데이터를 저장한다.")
-    public void saveAllTest(final List<UsageLocation> usageLocations) {
+    @DisplayName("실행된다.")
+    public void executeTest(final List<UsageLocation> usageLocations) {
 
         // when
         crawlDataPipelineService.execute(usageLocations);
