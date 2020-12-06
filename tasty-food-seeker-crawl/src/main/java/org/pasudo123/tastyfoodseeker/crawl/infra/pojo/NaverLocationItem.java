@@ -42,15 +42,15 @@ public class NaverLocationItem {
     public Restaurant toRestaurantEntity() {
 
         final String additionalInfo = "{"
-                .concat("\"mapx\"").concat(mapx).concat(",")
-                .concat("\"mapy\"").concat(mapy)
+                .concat("\"mapx\":").concat(mapx).concat(",")
+                .concat("\"mapy\":").concat(mapy)
                 .concat("}");
 
         return Restaurant.builder()
                 .name(title)
                 .category(category)
                 .address(address)
-                .loadAddress(roadAddress)
+                .roadAddress(roadAddress)
                 .additionalInfo(additionalInfo)
                 .build();
     }

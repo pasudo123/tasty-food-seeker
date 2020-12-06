@@ -3,11 +3,13 @@ package org.pasudo123.tastyfoodseeker.crawl.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.pasudo123.tastyfoodseeker.crawl.infra.NaverSearchClient;
-import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocationInfo;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocation;
+import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocationInfo;
 import org.pasudo123.tastyfoodseeker.domain.restaurant.model.Restaurant;
+import org.pasudo123.tastyfoodseeker.domain.restaurant.service.RestaurantSaveService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class CrawlDataPipelineService {
 
     private final NaverSearchClient naverSearchClient;
+    private final RestaurantSaveService restaurantSaveService;
 
     /**
      * (1) api 조회
@@ -29,13 +32,18 @@ public class CrawlDataPipelineService {
                 .map(UsageLocation::toRestaurantInfo)
                 .collect(Collectors.toList());
 
+        final List<Restaurant> restaurants = new ArrayList<>();
+
         for(UsageLocationInfo info : usageLocationInfos) {
             naverSearchClient.getLocationInfoByApi(info.getName())
                     .flatMap(naverLocationItems -> naverLocationItems.findClosestAddressByInfo(info))
                     .ifPresent(naverLocationItem -> {
                         /** 엔티티 변환 및 save 수행하도록 설정 **/
                         final Restaurant restaurant = naverLocationItem.toRestaurantEntity();
+                        restaurants.add(restaurant);
                     });
         }
+
+        restaurantSaveService.saveAll(restaurants);
     }
 }

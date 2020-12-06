@@ -1,14 +1,20 @@
 package org.pasudo123.tastyfoodseeker.domain.restaurant.model;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "restaurant")
+@Table(name = "restaurant", indexes = {
+        @Index(name = "name_idx", columnList = "name"),
+        @Index(name = "address_idx", columnList = "address")
+})
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant {
 
     @Id
@@ -25,8 +31,8 @@ public class Restaurant {
     @Column(name = "address", columnDefinition = "VARCHAR(100)", nullable = false)
     private String address = Strings.EMPTY;
 
-    @Column(name = "loadAddress", columnDefinition = "VARCHAR(100)", nullable = false)
-    private String loadAddress = Strings.EMPTY;
+    @Column(name = "road_address", columnDefinition = "VARCHAR(100)", nullable = false)
+    private String roadAddress = Strings.EMPTY;
 
     @Column(name = "additional_info", columnDefinition = "TEXT", nullable = false)
     private String additionalInfo = Strings.EMPTY;
@@ -35,12 +41,12 @@ public class Restaurant {
     public Restaurant(final String name,
                       final String category,
                       final String address,
-                      final String loadAddress,
+                      final String roadAddress,
                       final String additionalInfo) {
         this.name = name;
         this.category = category;
         this.address = address;
-        this.loadAddress = loadAddress;
+        this.roadAddress = roadAddress;
         this.additionalInfo = additionalInfo;
     }
 }
