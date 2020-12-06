@@ -32,9 +32,7 @@ public class TastyFoodSeekExplorer {
         while(this.isNextPage()) {
             log.info("current viewing page : {}", webDriver.getCurrentUrl());
             final String currentViewingPageUrl = webDriver.getCurrentUrl();
-            final List<UsageLocation> usageLocations = crawler.doCrawl(currentViewingPageUrl);
-
-            // TODO save 수행할수 있도록 한다.
+            crawler.doCrawl(currentViewingPageUrl);
         }
 
         this.closeBrowser();
@@ -48,9 +46,6 @@ public class TastyFoodSeekExplorer {
         webDriver.close();
     }
 
-    private void switchByUrl(final String url) {
-//        webDriver.get(url);
-    }
     /**
      * select box 에서 날짜를 선택한다.
      */
