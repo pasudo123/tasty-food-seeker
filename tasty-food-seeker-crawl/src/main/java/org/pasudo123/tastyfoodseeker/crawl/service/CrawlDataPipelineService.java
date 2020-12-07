@@ -3,6 +3,7 @@ package org.pasudo123.tastyfoodseeker.crawl.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.pasudo123.tastyfoodseeker.crawl.infra.NaverSearchClient;
+import org.pasudo123.tastyfoodseeker.crawl.infra.pojo.NaverLocationItem;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocation;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocationInfo;
 import org.pasudo123.tastyfoodseeker.domain.restaurant.model.Restaurant;
@@ -37,8 +38,9 @@ public class CrawlDataPipelineService {
         for(UsageLocationInfo info : usageLocationInfos) {
             naverSearchClient.getLocationInfoByApi(info.getName())
                     .flatMap(naverLocationItems -> naverLocationItems.findClosestAddressByInfo(info))
+                    .filter(NaverLocationItem::isSeoulLocation)
+                    .filter(NaverLocationItem::isRestaurant)
                     .ifPresent(naverLocationItem -> {
-                        /** 엔티티 변환 및 save 수행하도록 설정 **/
                         final Restaurant restaurant = naverLocationItem.toRestaurantEntity();
                         restaurants.add(restaurant);
                     });

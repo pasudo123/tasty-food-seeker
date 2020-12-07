@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "restaurant", indexes = {
         @Index(name = "name_idx", columnList = "name"),
+        @Index(name = "gu_idx", columnList = "gu"),
         @Index(name = "address_idx", columnList = "address")
 })
 @Getter
@@ -27,6 +28,10 @@ public class Restaurant {
 
     @Column(name = "category", columnDefinition = "VARCHAR(100)", nullable = false)
     private String category = Strings.EMPTY;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gu", columnDefinition = "VARCHAR(50)", nullable = false)
+    private Gu gu;
 
     @Column(name = "address", columnDefinition = "VARCHAR(100)", nullable = false)
     private String address = Strings.EMPTY;
@@ -45,6 +50,7 @@ public class Restaurant {
                       final String additionalInfo) {
         this.name = name;
         this.category = category;
+        this.gu = Gu.findGuByAddress(address);
         this.address = address;
         this.roadAddress = roadAddress;
         this.additionalInfo = additionalInfo;

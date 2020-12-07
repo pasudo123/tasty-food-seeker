@@ -29,8 +29,20 @@ public class NaverSearchClient {
      * query 를 기준으로 naver search open api 를 이용한다.
      */
     public Optional<NaverLocationItems> getLocationInfoByApi(final String query) {
+        if(query.isEmpty()) {
+            return Optional.empty();
+        }
+
         final String uri = BASE_API.concat("?display=5&query=").concat(query);
 
+        try {
+            // http 429 : too many requests from get 으로 인한
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            log.info("naver search open api error : {}", e.getMessage());
+        }
+
+        // 429 Too Many Requests from GET
         final String response = client.method(HttpMethod.GET)
                 .uri(uri)
                 .header(NAVER_CLIENT_ID_HEADER, clientId)

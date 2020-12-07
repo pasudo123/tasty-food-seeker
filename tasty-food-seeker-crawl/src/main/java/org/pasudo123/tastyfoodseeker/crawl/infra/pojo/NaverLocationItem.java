@@ -13,10 +13,14 @@ import java.util.Set;
 @ToString
 public class NaverLocationItem {
 
-    private static final Set<String> STORE = new HashSet<>(){{
-        add("<b>");
-        add("</b>");
+    private static final Set<String> NONE_RESTAURANTS = new HashSet<>(){{
+        add("문구");
+        add("슈퍼");
+        add("예식장");
+        add("장례식장");
     }};
+
+    private static final String SEOUL_LOCATION = "서울";
 
     private String title;
     private String link;
@@ -33,10 +37,29 @@ public class NaverLocationItem {
      */
     @JsonSetter
     public void setTitle(String title) {
-        for(String expr : STORE) {
-            title = title.replaceAll(expr, Strings.EMPTY);
-        }
+        title = title.replaceAll("<b>", Strings.EMPTY);
+        title = title.replaceAll("</b>", Strings.EMPTY);
         this.title = title;
+    }
+
+    /**
+     * 서울지역 여부
+     */
+    public boolean isSeoulLocation() {
+        return address.contains(SEOUL_LOCATION);
+    }
+
+    /**
+     * 음식점 여부
+     */
+    public boolean isRestaurant() {
+        for(String name : NONE_RESTAURANTS) {
+            if(category.contains(name)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public Restaurant toRestaurantEntity() {

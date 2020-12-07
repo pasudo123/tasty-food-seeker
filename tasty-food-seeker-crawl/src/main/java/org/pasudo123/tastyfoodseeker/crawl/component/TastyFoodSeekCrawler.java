@@ -39,6 +39,7 @@ public class TastyFoodSeekCrawler {
 
             // 크롤링한 데이터를 기반으로 client 에게 요청보내도록 한다.
             crawlDataPipelineService.execute(usageLocations);
+            usageLocations.clear();
 
             // webDriver 는 navigate 시, 이전요소들은 만료되기때문에 다시 갱신이 필요하다.
             historyBack();
