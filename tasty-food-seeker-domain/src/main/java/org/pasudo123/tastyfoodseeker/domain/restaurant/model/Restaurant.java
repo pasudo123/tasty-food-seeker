@@ -1,5 +1,6 @@
 package org.pasudo123.tastyfoodseeker.domain.restaurant.model;
 
+import com.google.common.hash.Hashing;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,12 +8,13 @@ import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 
 import javax.persistence.*;
+import java.nio.charset.StandardCharsets;
 
 @Entity
 @Table(name = "restaurant", indexes = {
         @Index(name = "name_idx", columnList = "name"),
         @Index(name = "gu_idx", columnList = "gu"),
-        @Index(name = "address_idx", columnList = "address")
+        @Index(name = "hash_idx", columnList = "hash")
 })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -42,6 +44,9 @@ public class Restaurant {
     @Column(name = "additional_info", columnDefinition = "TEXT", nullable = false)
     private String additionalInfo = Strings.EMPTY;
 
+    @Column(name = "hash", columnDefinition = "VARCHAR(64)", nullable = false)
+    private String hash;
+
     @Builder
     public Restaurant(final String name,
                       final String category,
@@ -54,5 +59,15 @@ public class Restaurant {
         this.address = address;
         this.roadAddress = roadAddress;
         this.additionalInfo = additionalInfo;
+        this.hash = getHash(name, address);
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    private String getHash(final String name, final String address) {
+        final String concatString = name.concat(address);
+        return Hashing.sha256().
+                hashString(concatString, StandardCharsets.UTF_8)
+                .toString()
+                .substring(0, 64);
     }
 }

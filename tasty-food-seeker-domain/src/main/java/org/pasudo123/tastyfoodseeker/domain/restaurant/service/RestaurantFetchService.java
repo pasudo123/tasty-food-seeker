@@ -6,21 +6,16 @@ import org.pasudo123.tastyfoodseeker.domain.restaurant.repository.RestaurantRepo
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
-public class RestaurantSaveService {
+@Transactional(readOnly = true)
+public class RestaurantFetchService {
 
-    private final RestaurantFetchService restaurantFetchService;
     private final RestaurantRepository restaurantRepository;
 
-    public void saveAll(final List<Restaurant> restaurants) {
-        for(Restaurant restaurant : restaurants) {
-            if(restaurantFetchService.findRestaurantByHash(restaurant).isEmpty()){
-                restaurantRepository.save(restaurant);
-            }
-        }
+    public Optional<Restaurant> findRestaurantByHash(final Restaurant restaurant) {
+        return restaurantRepository.findByHash(restaurant.getHash());
     }
 }
