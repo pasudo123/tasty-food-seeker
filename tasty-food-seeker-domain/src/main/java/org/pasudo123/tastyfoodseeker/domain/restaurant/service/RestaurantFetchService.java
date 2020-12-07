@@ -16,6 +16,6 @@ public class RestaurantFetchService {
     private final RestaurantRepository restaurantRepository;
 
     public Optional<Restaurant> findRestaurantByHash(final Restaurant restaurant) {
-        return restaurantRepository.findByHash(restaurant.getHash());
+        return restaurantRepository.findBySha256Hash(restaurant.getSha256Hash());
     }
 }

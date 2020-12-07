@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
-    Optional<Restaurant> findByHash(final String hash);
+    Optional<Restaurant> findBySha256Hash(final String hash);
 }

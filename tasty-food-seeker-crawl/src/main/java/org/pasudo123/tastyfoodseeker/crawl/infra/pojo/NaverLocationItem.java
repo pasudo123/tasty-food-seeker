@@ -14,10 +14,12 @@ import java.util.Set;
 public class NaverLocationItem {
 
     private static final Set<String> NONE_RESTAURANTS = new HashSet<>(){{
-        add("문구");
-        add("슈퍼");
-        add("예식장");
-        add("장례식장");
+        add("문구"); add("슈퍼"); add("주택"); add("숙박");
+        add("여행"); add("명소"); add("산업"); add("기업");
+        add("쇼핑");
+        add("편의점"); add("예식장");
+        add("장례식장"); add("공중전화");
+        add("기술서비스");
     }};
 
     private static final String SEOUL_LOCATION = "서울";

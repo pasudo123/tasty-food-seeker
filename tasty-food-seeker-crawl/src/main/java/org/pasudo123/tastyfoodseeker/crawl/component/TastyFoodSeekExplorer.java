@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 @RequiredArgsConstructor
 public class TastyFoodSeekExplorer {
+
     private static final String CRAWL_URL = "http://opengov.seoul.go.kr/expense/seoul";
     private static final int INIT_PAGE = 1;
 

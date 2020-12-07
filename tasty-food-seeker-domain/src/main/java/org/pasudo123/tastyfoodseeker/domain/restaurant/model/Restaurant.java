@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 @Table(name = "restaurant", indexes = {
         @Index(name = "name_idx", columnList = "name"),
         @Index(name = "gu_idx", columnList = "gu"),
-        @Index(name = "hash_idx", columnList = "hash")
+        @Index(name = "hash_idx", columnList = "sha256_hash")
 })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -44,8 +44,8 @@ public class Restaurant {
     @Column(name = "additional_info", columnDefinition = "TEXT", nullable = false)
     private String additionalInfo = Strings.EMPTY;
 
-    @Column(name = "hash", columnDefinition = "VARCHAR(64)", nullable = false)
-    private String hash;
+    @Column(name = "sha256_hash", columnDefinition = "VARCHAR(32)", nullable = false)
+    private String sha256Hash;
 
     @Builder
     public Restaurant(final String name,
@@ -59,15 +59,15 @@ public class Restaurant {
         this.address = address;
         this.roadAddress = roadAddress;
         this.additionalInfo = additionalInfo;
-        this.hash = getHash(name, address);
+        this.sha256Hash = getSha256Hash(name, address);
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    private String getHash(final String name, final String address) {
+    private String getSha256Hash(final String name, final String address) {
         final String concatString = name.concat(address);
         return Hashing.sha256().
                 hashString(concatString, StandardCharsets.UTF_8)
                 .toString()
-                .substring(0, 64);
+                .substring(0, 32);
     }
 }

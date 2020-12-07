@@ -18,13 +18,13 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class SeleniumConfiguration {
 
-    @Value("${web-driver.host-url:http://localhost:14444/wd/hub}")
-    private String hostUrl;
+    @Value("${web-driver.path:http://localhost:14444/wd/hub}")
+    private String webDriverPath;
 
     @Profile("dev")
     @Bean
     public WebDriver devWebDriver() {
-        System.setProperty("webdriver.chrome.driver", "C:\\develop\\workspace\\tasty-food-seeker\\tasty-food-seeker-crawl\\src\\main\\resources\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", webDriverPath);
         final WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         return driver;
@@ -38,7 +38,7 @@ public class SeleniumConfiguration {
             final ChromeOptions opt = new ChromeOptions();
             opt.addArguments("--headless");
             
-            final WebDriver driver = new RemoteWebDriver(new URL(hostUrl), opt);
+            final WebDriver driver = new RemoteWebDriver(new URL(webDriverPath), opt);
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
             return driver;

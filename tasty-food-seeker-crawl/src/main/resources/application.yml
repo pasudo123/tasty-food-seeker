@@ -18,5 +18,16 @@ spring:
     properties.hibernate.format_sql: false
     open-in-view: false
 
+---
+spring:
+  profiles: dev
+
 web-driver:
-  host-url: "http://localhost:14444/wd/hub"
+  path: "C:\\develop\\workspace\\tasty-food-seeker\\tasty-food-seeker-crawl\\src\\main\\resources\\chromedriver.exe"
+
+---
+spring:
+  profiles: prod
+
+web-driver:
+  path: "http://localhost:14444/wd/hub"
