@@ -3,6 +3,7 @@ spring:
     active: dev
     include:
       - secret
+
   freemarker:
     enabled: true
     template-loader-path: classpath:/templates
@@ -27,5 +28,14 @@ spring:
     properties.hibernate.format_sql: false
     open-in-view: false
 
-web-driver:
-  host-url: "http://localhost:14444/wd/hub"
+---
+spring:
+  profiles: dev
+  # spring 실행 시 edit-configuration 에서 Running Application update policies 를 설정해준다.
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+
