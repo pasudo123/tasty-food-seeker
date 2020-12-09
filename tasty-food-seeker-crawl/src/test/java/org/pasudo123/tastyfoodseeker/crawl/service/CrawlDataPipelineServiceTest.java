@@ -42,8 +42,6 @@ class CrawlDataPipelineServiceTest {
 
         // when
         crawlDataPipelineService.execute(usageLocations);
-
-
     }
 
     static Stream<Arguments> provideUsageLocations() {
