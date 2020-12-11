@@ -13,11 +13,11 @@
     data() {
       return {
         map: null,
-        height: 680,
+        height: 460,
         mapOptions: {
-          lat: 37,
-          lng: 127,
-          zoom: 10,
+          lat: 37.5758254,
+          lng: 126.9778619,
+          zoom: 15,
           zoomControl: true,
           zoomControlOptions: {position: 'TOP_RIGHT'},
           mapTypeControl: true
@@ -28,7 +28,6 @@
     methods: {
       onLoad(vue) {
         this.map = vue;
-        console.debug(this.map);
       }
     }
   }

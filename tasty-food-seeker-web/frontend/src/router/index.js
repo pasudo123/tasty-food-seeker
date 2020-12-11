@@ -10,7 +10,17 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: () => import(/* webpackChunkName: "about" */ '../components/Root')
+      component: () => import('../components/Root')
+    },
+    {
+      path: '/explore',
+      name: 'Explore',
+      component: () => import('../components/explore/Explore')
+    },
+    {
+      path: '/map',
+      name: 'Map',
+      component: () => import('../components/explore/Explore')
     }
   ]
 })
