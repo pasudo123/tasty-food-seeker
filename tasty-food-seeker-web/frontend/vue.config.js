@@ -9,9 +9,11 @@ module.exports = {
     devServer: {
         port: 35555,
         proxy: {
-            '/dev-api': {
-                target: 'http://localhost:8080/api'
-            }
+            '^/dev-api/api': {
+                target: 'http://localhost:8080',
+                pathRewrite: { '^/dev-api': '' },
+                logLevel: 'debug'
+            },
         }
     }
 }
