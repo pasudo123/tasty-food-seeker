@@ -3,6 +3,7 @@ require('@/global/global.css')
 import Vue from 'vue'
 import VueMeta from 'vue-meta'
 import naver from 'vue-naver-maps'
+import Store from './store'
 import Router from './router'
 import App from './App.vue'
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
@@ -18,5 +19,6 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
-  router: Router
+  router: Router,
+  store: Store
 }).$mount('#app')

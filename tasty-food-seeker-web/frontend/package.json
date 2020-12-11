@@ -9,14 +9,17 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.5.4",
+    "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.20.1",
     "core-js": "^3.6.5",
     "portal-vue": "^2.1.7",
     "vue": "^2.6.12",
+    "vue-axios": "^3.2.0",
     "vue-meta": "^2.4.0",
     "vue-naver-maps": "^0.14.1",
-    "vue-router": "^3.4.9"
+    "vue-router": "^3.4.9",
+    "vuex": "^3.6.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -42,7 +45,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-unused-vars": "off"
+    }
   },
   "browserslist": [
     "> 1%",

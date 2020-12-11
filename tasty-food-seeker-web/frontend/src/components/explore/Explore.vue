@@ -7,7 +7,7 @@
         </template>
         <b-form-select v-model="selected" :options="locationOptions"></b-form-select>
         <template #append>
-          <b-button variant="outline-dark" class="exploreBtn">조회</b-button>
+          <b-button variant="outline-dark" class="exploreBtn" @click="exploreTastyLocation">조회</b-button>
         </template>
       </b-input-group>
     </div>
@@ -15,6 +15,13 @@
 </template>
 
 <script>
+
+  import {createNamespacedHelpers} from 'vuex'
+
+  const {
+    mapActions: exploreMapActions
+  } = createNamespacedHelpers('explore')
+
   export default {
     name: "Search",
     data() {
@@ -48,6 +55,17 @@
           {text: '성동구', value: 'SEONGDONG_GU'},
           {text: '중구', value: 'JUNG_GU'},
         ]
+      }
+    },
+    methods: {
+      ...exploreMapActions(['fetchLocationByGu']),
+
+      exploreTastyLocation() {
+        const params = {}
+        params.selected = this.selected;
+        this.fetchLocationByGu(params).then(() => {
+
+        })
       }
     }
   }
