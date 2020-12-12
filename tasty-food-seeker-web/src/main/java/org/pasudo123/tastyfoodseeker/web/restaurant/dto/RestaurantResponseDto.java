@@ -10,6 +10,7 @@ import org.pasudo123.tastyfoodseeker.domain.restaurant.pojo.AdditionalInfo;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RestaurantResponseDto {
 
+    private long id;
     private String name;
     private String category;
     private String guName;
@@ -18,6 +19,7 @@ public class RestaurantResponseDto {
     private AdditionalInfo additionalInfo;
 
     public RestaurantResponseDto(final Restaurant restaurant, final AdditionalInfo additionalInfo) {
+        this.id = restaurant.getId();
         this.name = restaurant.getName();
         this.category = restaurant.getCategory();
         this.guName = restaurant.getGu().getName();

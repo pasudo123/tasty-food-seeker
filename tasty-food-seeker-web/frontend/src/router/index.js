@@ -18,6 +18,11 @@ export default new Router({
       component: () => import('../components/explore/Explore')
     },
     {
+      path: '/explore/:id',
+      name: 'ExploreDetail',
+      component: () => import('../components/explore/ExploreDetail')
+    },
+    {
       path: '/map',
       name: 'Map',
       component: () => import('../components/explore/Explore')

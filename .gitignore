@@ -37,3 +37,4 @@ out/
 
 ### Custom
 **/src/main/resources/application-secret.yml
+**/src/main/generated

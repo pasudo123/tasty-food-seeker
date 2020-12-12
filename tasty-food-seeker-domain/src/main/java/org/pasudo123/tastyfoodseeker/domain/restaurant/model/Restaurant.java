@@ -20,6 +20,8 @@ import java.nio.charset.StandardCharsets;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant {
 
+    private static final String BRACKET = ">";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "BIGINT", nullable = false)
@@ -69,5 +71,9 @@ public class Restaurant {
                 hashString(concatString, StandardCharsets.UTF_8)
                 .toString()
                 .substring(0, 32);
+    }
+
+    public String getCategory() {
+        return category.substring(category.indexOf(BRACKET) + 1).strip();
     }
 }

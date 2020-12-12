@@ -1,3 +1,8 @@
+plugins {
+    // querydsl
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+}
+
 jar {
     enabled = true
 }
@@ -7,10 +12,37 @@ bootJar {
 }
 
 dependencies {
+    // [querydsl]
+    compile "com.querydsl:querydsl-jpa"
+    annotationProcessor "com.querydsl:querydsl-apt"
 
     // [guava]
     implementation("com.google.guava:guava:30.0-jre")
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+}
+
+// querydsl
+apply plugin: 'com.ewerk.gradle.plugins.querydsl'
+def querydslDir = "src/main/generated"
+
+// querydsl plugin
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+
+// 실행을 위해 함께 컴파일되는 추가적인 리소스 파일의 모음
+sourceSets.main.java.srcDirs = [querydslDir,'src/main/java']
+
+configurations {
+    // compileClassPath 는 java plugin 에 의해 추가되었음
+    // 아래 내용으로 인해 SpringBoot 의존성을 querydsl 컴파일 단계에서 찾을 수 있음.
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
 }

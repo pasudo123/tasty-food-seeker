@@ -25,6 +25,18 @@
           <template #cell(index)="data">
             {{ (data.index + 1) + (currentPage - 1) * 10 }}
           </template>
+
+          <template #cell(roadAddress)="data">
+            <div class="addressDiv">
+              {{data.item.roadAddress}}
+            </div>
+          </template>
+
+          <template #cell(detail)="data">
+            <b-icon icon="arrow-up-right-circle"
+                    style="width: 18px; height: 18px; vertical-align:middle; cursor: pointer;"
+                    @click="gotoDetailRestaurant(data.item)" />
+          </template>
         </b-table>
       </b-overlay>
       <b-pagination v-model="currentPage"
@@ -126,6 +138,10 @@
         }).catch(() => {
           this.fetchTableLoading = false;
         })
+      },
+
+      gotoDetailRestaurant(item) {
+        this.$router.push({name: 'ExploreDetail', params: {id: item.id}})
       }
     }
   }
@@ -133,7 +149,6 @@
 
 <style lang="scss">
   #search {
-    //margin:
     .locationLabel {
       padding: 0 25px;
     }
@@ -146,7 +161,42 @@
     }
 
     .tableWrapper {
-      margin: 15px 0 5px 0;
+      margin: 20px 0 5px 0;
     }
+  }
+</style>
+
+<style>
+
+  .locationLabel {
+    padding: 0 30px;
+  }
+
+  .exploreBtn {
+    padding: 0 30px;
+    height: 100%;
+  }
+
+  th.indexTh {
+    width: 50px;
+  }
+
+  th.categoryTh {
+    width: 200px;
+  }
+
+  div.addressDiv {
+    width: 260px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  th.moreTh {
+    width: 70px;
+  }
+
+  td.moreTd {
+
   }
 </style>
