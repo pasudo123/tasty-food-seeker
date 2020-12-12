@@ -10,12 +10,14 @@ const actions = {
         const uri = `/api/restaurants`
         const queryParam = {}
         queryParam.gu = params.selected;
+        queryParam.page = 1;
+        queryParam.size = 10;
 
         return new Promise((resolve, reject) => {
             request.get(uri, {params: queryParam}).then((response) => {
                 console.debug(response);
                 resolve();
-            }).catch((error) => {})
+            })
         })
     }
 }
