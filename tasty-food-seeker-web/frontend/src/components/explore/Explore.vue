@@ -1,5 +1,5 @@
 <template>
-  <div id="search">
+  <div id="explore">
     <div class="selectorWrapper">
       <b-input-group>
         <template #prepend>
@@ -7,9 +7,32 @@
         </template>
         <b-form-select v-model="selected" :options="locationOptions"></b-form-select>
         <template #append>
-          <b-button variant="outline-dark" class="exploreBtn" @click="exploreTastyLocation">조회</b-button>
+          <b-overlay class="exploreOverlay" :show="fetchBtnLoading" opacity="0.6" spinner-small>
+            <b-button variant="outline-dark" class="exploreBtn" @click="exploreTastyLocation()">조회</b-button>
+          </b-overlay>
         </template>
       </b-input-group>
+    </div>
+    <div class="tableWrapper">
+      <b-overlay :show="fetchTableLoading" spinner-type="grow">
+        <b-table fixed
+                 id="location-table"
+                 primary-key="id"
+                 :head-variant="'dark'"
+                 :fields="this.tableFields"
+                 :items="this.items"
+                 :per-page="perPage">
+          <template #cell(index)="data">
+            {{ (data.index + 1) + (currentPage - 1) * 10 }}
+          </template>
+        </b-table>
+      </b-overlay>
+      <b-pagination v-model="currentPage"
+                    aria-control="location-table"
+                    align="center"
+                    @change="changeCurrentPage"
+                    :total-rows="rows"
+                    :per-page="perPage"></b-pagination>
     </div>
   </div>
 </template>
@@ -19,13 +42,20 @@
   import {createNamespacedHelpers} from 'vuex'
 
   const {
-    mapActions: exploreMapActions
+    mapActions: exploreMapActions,
+    mapGetters: exploreMapGetters
   } = createNamespacedHelpers('explore')
 
   export default {
-    name: "Search",
+    name: "Explore",
     data() {
       return {
+        items: [],
+        currentPage: 1,
+        perPage: 10,
+        rows: 0,
+        fetchBtnLoading: false,
+        fetchTableLoading: false,
         selected: null,
         locationOptions: [
           {text: '전체', value: 'ALL'},
@@ -57,14 +87,44 @@
         ]
       }
     },
+    computed: {
+      ...exploreMapGetters(['currentLocationItems', 'tableFields'])
+    },
     methods: {
       ...exploreMapActions(['fetchLocationByGu']),
 
       exploreTastyLocation() {
+        this.currentPage = 1;
+
         const params = {}
         params.selected = this.selected;
-        this.fetchLocationByGu(params).then(() => {
+        params.currentPage = this.currentPage;
+        params.size = this.perPage;
 
+        this.fetchBtnLoading = true;
+        this.fetchLocationByGu(params).then(() => {
+          this.fetchBtnLoading = false;
+          this.items = this.currentLocationItems.items;
+          this.rows = this.currentLocationItems.totalElements;
+        }).catch(() => {
+          this.items = [];
+          this.fetchBtnLoading = false;
+        })
+      },
+
+      changeCurrentPage(currentPage) {
+        const params = {}
+
+        this.fetchTableLoading = true;
+        params.selected = this.selected;
+        params.currentPage = currentPage;
+        params.size = this.perPage;
+        this.fetchLocationByGu(params).then(() => {
+          this.items = this.currentLocationItems.items;
+          this.rows = this.currentLocationItems.totalElements;
+          this.fetchTableLoading = false;
+        }).catch(() => {
+          this.fetchTableLoading = false;
         })
       }
     }
@@ -78,8 +138,15 @@
       padding: 0 25px;
     }
 
-    .exploreBtn {
-      padding: 0 25px;
+    .exploreOverlay {
+      .exploreBtn {
+        padding: 0 25px;
+        height: 100%;
+      }
+    }
+
+    .tableWrapper {
+      margin: 15px 0 5px 0;
     }
   }
 </style>
