@@ -1,8 +1,11 @@
 dependencies {
+
+	implementation project(":tasty-food-seeker-domain")
+
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.springframework.boot:spring-boot-starter-freemarker'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	// hot reload
-	developmentOnly "org.springframework.boot:spring-boot-devtools"
+	// hot reload : vue 로 전환하면서 필요없음.
+	// developmentOnly "org.springframework.boot:spring-boot-devtools"
 }

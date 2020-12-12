@@ -15,7 +15,7 @@ const actions = {
             request.get(uri, {params: queryParam}).then((response) => {
                 console.debug(response);
                 resolve();
-            })
+            }).catch((error) => {})
         })
     }
 }

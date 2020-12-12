@@ -1,4 +1,4 @@
-package org.pasudo123.tastyfoodseeker.domain.restaurant.service;
+package org.pasudo123.tastyfoodseeker.crawl.service;
 
 import lombok.RequiredArgsConstructor;
 import org.pasudo123.tastyfoodseeker.domain.restaurant.model.Restaurant;

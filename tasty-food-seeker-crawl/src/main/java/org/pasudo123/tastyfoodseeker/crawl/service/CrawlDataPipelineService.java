@@ -7,7 +7,6 @@ import org.pasudo123.tastyfoodseeker.crawl.infra.pojo.NaverLocationItem;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocation;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocationInfo;
 import org.pasudo123.tastyfoodseeker.domain.restaurant.model.Restaurant;
-import org.pasudo123.tastyfoodseeker.domain.restaurant.service.RestaurantSaveService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

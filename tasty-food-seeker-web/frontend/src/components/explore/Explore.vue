@@ -28,7 +28,7 @@
       return {
         selected: null,
         locationOptions: [
-          {text: '전체', value: 'all'},
+          {text: '전체', value: 'ALL'},
           {text: '종로구', value: 'JONGNO_GU'},
           {text: '용산구', value: 'YONGSAN_GU'},
           {text: '광진구', value: 'GWANGJIN_GU'},

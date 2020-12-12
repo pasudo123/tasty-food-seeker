@@ -9,14 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping
-    public String main(Model model) {
-        model.addAttribute("customMessage", "sadffadsafa");
+    public String main() {
         return "index";
     }
-
-//    @ModelAttribute("baseLocation")
-//    public void baseLocation(Model model) {
-//        // spring mvc 는 request handler method 호출 이전에 해당 메소드를 우선적으로 호출 수행
-//
-//    }
 }

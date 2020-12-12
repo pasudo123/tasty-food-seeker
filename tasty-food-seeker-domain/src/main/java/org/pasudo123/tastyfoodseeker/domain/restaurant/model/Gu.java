@@ -35,7 +35,7 @@ public enum Gu {
     SEONGDONG_GU("성동구"),
     JUNG_GU("중구"),
 
-    NONE("없음");
+    NONE("없음"), ALL("전체");
 
     private final String name;
 

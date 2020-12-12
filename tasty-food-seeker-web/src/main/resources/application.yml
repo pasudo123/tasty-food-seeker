@@ -10,7 +10,10 @@ spring:
     suffix: .ftl
     content-type: text/html
     charset: UTF-8
-    cache: false
+#    cache: false
+
+  mvc:
+    static-path-pattern: /static/**
 
   datasource:
     url: jdbc:mysql://localhost:3306/tasty-food-seeker?useSSL=false&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=Asia/Seoul
@@ -32,10 +35,10 @@ spring:
 spring:
   profiles: dev
   # spring 실행 시 edit-configuration 에서 Running Application update policies 를 설정해준다.
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      enabled: true
+#  devtools:
+#    livereload:
+#      enabled: true
+#    restart:
+#      enabled: true
 
 

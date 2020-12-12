@@ -5,8 +5,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.pasudo123.tastyfoodseeker.crawl.config.ObjectMapperConfiguration;
 import org.pasudo123.tastyfoodseeker.crawl.config.WebClientConfiguration;
 import org.pasudo123.tastyfoodseeker.crawl.infra.NaverSearchClient;
+import org.pasudo123.tastyfoodseeker.crawl.infra.NaverSearchParser;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,18 +24,19 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SpringBootTest(classes = {
         CrawlDataPipelineService.class,
-        NaverSearchClient.class
+        RestaurantSaveService.class,
+        NaverSearchClient.class,
+        NaverSearchParser.class
 })
 @ExtendWith(SpringExtension.class)
-@Import(WebClientConfiguration.class)
+@Import({WebClientConfiguration.class, ObjectMapperConfiguration.class})
 @DisplayName("크롤링 데이터 파이프라이닝 서비스는")
 class CrawlDataPipelineServiceTest {
 
-    @Autowired
-    private CrawlDataPipelineService crawlDataPipelineService;
-
-    @Autowired
-    private NaverSearchClient naverSearchClient;
+    @Autowired private CrawlDataPipelineService crawlDataPipelineService;
+    @Autowired private RestaurantSaveService restaurantSaveService;
+    @Autowired private NaverSearchClient naverSearchClient;
+    @Autowired private NaverSearchParser naverSearchParser;
 
     @MethodSource("provideUsageLocations")
     @ParameterizedTest
