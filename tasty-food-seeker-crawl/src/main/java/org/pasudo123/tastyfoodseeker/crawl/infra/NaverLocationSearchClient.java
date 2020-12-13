@@ -13,7 +13,7 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class NaverSearchClient {
+public class NaverLocationSearchClient {
 
     @Value("${naver.search-openapi.client-id}") private String clientId;
     @Value("${naver.search-openapi.secret-key}") private String secretKey;

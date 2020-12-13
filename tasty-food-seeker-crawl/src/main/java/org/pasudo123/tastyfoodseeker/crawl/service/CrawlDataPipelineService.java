@@ -2,7 +2,7 @@ package org.pasudo123.tastyfoodseeker.crawl.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.pasudo123.tastyfoodseeker.crawl.infra.NaverSearchClient;
+import org.pasudo123.tastyfoodseeker.crawl.infra.NaverLocationSearchClient;
 import org.pasudo123.tastyfoodseeker.crawl.infra.pojo.NaverLocationItem;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocation;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocationInfo;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CrawlDataPipelineService {
 
-    private final NaverSearchClient naverSearchClient;
+    private final NaverLocationSearchClient naverLocationSearchClient;
     private final RestaurantSaveService restaurantSaveService;
 
     /**
@@ -35,7 +35,7 @@ public class CrawlDataPipelineService {
         final List<Restaurant> restaurants = new ArrayList<>();
 
         for(UsageLocationInfo info : usageLocationInfos) {
-            naverSearchClient.getLocationInfoByApi(info.getName())
+            naverLocationSearchClient.getLocationInfoByApi(info.getName())
                     .flatMap(naverLocationItems -> naverLocationItems.findClosestAddressByInfo(info))
                     .filter(NaverLocationItem::isSeoulLocation)
                     .filter(NaverLocationItem::isRestaurant)

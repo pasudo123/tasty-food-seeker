@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.pasudo123.tastyfoodseeker.crawl.config.ObjectMapperConfiguration;
 import org.pasudo123.tastyfoodseeker.crawl.config.WebClientConfiguration;
-import org.pasudo123.tastyfoodseeker.crawl.infra.NaverSearchClient;
+import org.pasudo123.tastyfoodseeker.crawl.infra.NaverLocationSearchClient;
 import org.pasudo123.tastyfoodseeker.crawl.infra.NaverSearchParser;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 @SpringBootTest(classes = {
         CrawlDataPipelineService.class,
         RestaurantSaveService.class,
-        NaverSearchClient.class,
+        NaverLocationSearchClient.class,
         NaverSearchParser.class
 })
 @ExtendWith(SpringExtension.class)
@@ -35,7 +35,7 @@ class CrawlDataPipelineServiceTest {
 
     @Autowired private CrawlDataPipelineService crawlDataPipelineService;
     @Autowired private RestaurantSaveService restaurantSaveService;
-    @Autowired private NaverSearchClient naverSearchClient;
+    @Autowired private NaverLocationSearchClient naverLocationSearchClient;
     @Autowired private NaverSearchParser naverSearchParser;
 
     @MethodSource("provideUsageLocations")

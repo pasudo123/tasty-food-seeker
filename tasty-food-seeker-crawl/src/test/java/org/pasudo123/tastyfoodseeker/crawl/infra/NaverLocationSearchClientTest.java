@@ -18,16 +18,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("dev")
 @SpringBootTest(classes = {
-        NaverSearchClient.class,
+        NaverLocationSearchClient.class,
         NaverSearchParser.class
 })
 @ExtendWith(SpringExtension.class)
 @Import({WebClientConfiguration.class, ObjectMapperConfiguration.class})
 @DisplayName("네이버 검색 클라이언트는")
-class NaverSearchClientTest {
+class NaverLocationSearchClientTest {
 
     @Autowired
-    private NaverSearchClient naverSearchClient;
+    private NaverLocationSearchClient naverLocationSearchClient;
 
     @Autowired
     private NaverSearchParser naverSearchParser;
@@ -39,7 +39,7 @@ class NaverSearchClientTest {
         final String query = "훈민정";
 
         // when
-        final Optional<NaverLocationItems> optional = naverSearchClient.getLocationInfoByApi(query);
+        final Optional<NaverLocationItems> optional = naverLocationSearchClient.getLocationInfoByApi(query);
 
         // then
         assertThat(optional).isNotEmpty();
