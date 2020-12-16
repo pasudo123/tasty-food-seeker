@@ -2,6 +2,7 @@
   <div id="exploreDetail">
     디테일 페이지
     {{this.currentLocationItem}}
+    <img src="https://naveropenapi.apigw.ntruss.com/map-static/v2/raster-cors?crs=NHN:128&w=800&h=800&center=309761,551897&public_transit=Y&level=16&X-NCP-APIGW-API-KEY-ID=sesxh1guj9">
   </div>
 </template>
 

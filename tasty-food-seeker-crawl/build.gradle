@@ -1,3 +1,18 @@
+task buildVersion {
+	// version.properties 파일 생성 : bootJar 태스트 의존성을 가짐
+	def file = file "${projectDir}/src/main/resources/version.properties"
+	def versionProps = new Properties()
+	versionProps.setProperty("version", "${project.name}-${version}")
+	file.withWriter {versionProps.store(it, null)}
+}
+
+bootJar {
+	dependsOn buildVersion
+	doLast {
+		println "${project.name} bootJar completed"
+	}
+}
+
 dependencies {
 
 	implementation project(":tasty-food-seeker-domain")
