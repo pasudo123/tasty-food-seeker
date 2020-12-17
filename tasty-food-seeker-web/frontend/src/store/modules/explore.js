@@ -48,7 +48,7 @@ const actions = {
                 resolve();
             }).catch(() => reject())
         })
-    }
+    },
 }
 
 const mutations = {

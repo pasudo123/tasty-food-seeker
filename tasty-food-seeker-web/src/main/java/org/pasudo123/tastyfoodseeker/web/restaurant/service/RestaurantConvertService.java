@@ -8,8 +8,13 @@ import org.pasudo123.tastyfoodseeker.domain.restaurant.model.Restaurant;
 import org.pasudo123.tastyfoodseeker.domain.restaurant.pojo.AdditionalInfo;
 import org.pasudo123.tastyfoodseeker.web.exception.ErrorCode;
 import org.pasudo123.tastyfoodseeker.web.exception.detail.JsonConvertException;
+import org.pasudo123.tastyfoodseeker.web.infra.NaverGeoCodingClient;
+import org.pasudo123.tastyfoodseeker.web.infra.pojo.NaverGeoItem;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseDto;
+import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseLatLngDto;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -17,11 +22,11 @@ import org.springframework.stereotype.Service;
 public class RestaurantConvertService {
 
     private final ObjectMapper mapper;
+    private final NaverGeoCodingClient geoCodingClient;
 
-    public RestaurantResponseDto entityToDto(final Restaurant restaurant) {
+    private AdditionalInfo mappingRestaurantToAdditionalInfo(final Restaurant restaurant) {
         try {
-            final AdditionalInfo additionalInfo = mapper.readValue(restaurant.getAdditionalInfo(), AdditionalInfo.class);
-            return new RestaurantResponseDto(restaurant, additionalInfo);
+            return mapper.readValue(restaurant.getAdditionalInfo(), AdditionalInfo.class);
         } catch (JsonProcessingException e) {
             throw new JsonConvertException(
                     ErrorCode.JSON_MAPPING_EXCEPTION,
@@ -29,5 +34,15 @@ public class RestaurantConvertService {
                     restaurant.getAdditionalInfo(),
                     AdditionalInfo.class);
         }
+    }
+
+    public RestaurantResponseDto entityToDto(final Restaurant restaurant) {
+        return new RestaurantResponseDto(restaurant, mappingRestaurantToAdditionalInfo(restaurant));
+    }
+
+    public RestaurantResponseLatLngDto entityToDtoIncludeGeo(final Restaurant restaurant) {
+        final AdditionalInfo additionalInfo = mappingRestaurantToAdditionalInfo(restaurant);
+        final Optional<NaverGeoItem> geoItemOptional = geoCodingClient.getGeoByApi(restaurant.getRoadAddress());
+        return new RestaurantResponseLatLngDto(restaurant, additionalInfo, geoItemOptional);
     }
 }

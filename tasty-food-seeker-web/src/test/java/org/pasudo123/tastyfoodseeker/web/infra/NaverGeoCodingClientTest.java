@@ -3,8 +3,8 @@ package org.pasudo123.tastyfoodseeker.web.infra;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.pasudo123.tastyfoodseeker.web.config.ObjectMapperConfiguration;
 import org.pasudo123.tastyfoodseeker.web.config.WebClientConfiguration;
+import org.pasudo123.tastyfoodseeker.web.infra.pojo.NaverGeoItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -12,32 +12,33 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("dev")
 @SpringBootTest(classes = {
-        NaverBlogSearchClient.class,
+        NaverGeoCodingClient.class
 })
 @ExtendWith(SpringExtension.class)
-@Import({WebClientConfiguration.class, ObjectMapperConfiguration.class})
-@DisplayName("네이버 검색 클라이언트는")
-class NaverBlogSearchClientTest {
-
+@Import(WebClientConfiguration.class)
+@DisplayName("NaverGeoCodingClient 는")
+class NaverGeoCodingClientTest {
 
     @Autowired
-    private NaverBlogSearchClient naverBlogSearchClient;
+    private NaverGeoCodingClient geoCodingClient;
 
     @Test
-    @DisplayName("블로그를 검색한다.")
-    public void getBlogsByApiTest() {
+    @DisplayName("주소를 좌표로 변환한다.")
+    public void getGeoByApiTest() {
 
         // given
-        final String query = "코레아노스 파워플랜트광화문점\t멕시코,남미음식";
+        final String query = "서울특별시 노원구 동일로203가길 29 브라운스톤중계 101호";
 
         // when
-        final Optional<Object> optional = naverBlogSearchClient.getBlogsByApi(query);
+        final Optional<NaverGeoItem> itemOptional = geoCodingClient.getGeoByApi(query);
 
         // then
-        assertThat(optional).isNotNull();
+        assertThat(itemOptional).isNotNull();
     }
+
 }

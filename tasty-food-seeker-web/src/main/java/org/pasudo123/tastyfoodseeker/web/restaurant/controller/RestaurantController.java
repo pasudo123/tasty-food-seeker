@@ -2,8 +2,8 @@ package org.pasudo123.tastyfoodseeker.web.restaurant.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.PageRequestDto;
-import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseDto;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseDtos;
+import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseLatLngDto;
 import org.pasudo123.tastyfoodseeker.web.restaurant.service.RestaurantFetchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ public class RestaurantController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<RestaurantResponseDto> fetchOnById(@PathVariable("id") long id) {
+    public ResponseEntity<RestaurantResponseLatLngDto> fetchOnById(@PathVariable("id") long id) {
         return ResponseEntity
                 .ok(fetchService.fetchOneById(id));
     }

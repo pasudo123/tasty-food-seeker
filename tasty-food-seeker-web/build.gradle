@@ -15,7 +15,9 @@ bootJar {
 
 dependencies {
 
-	implementation project(":tasty-food-seeker-domain")
+
+    implementation 'junit:junit:4.12'
+    implementation project(":tasty-food-seeker-domain")
 
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.springframework.boot:spring-boot-starter-freemarker'

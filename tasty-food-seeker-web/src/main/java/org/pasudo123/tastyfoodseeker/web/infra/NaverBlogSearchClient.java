@@ -30,12 +30,6 @@ public class NaverBlogSearchClient {
 
         final String uri = BASE_API.concat("?display=20&query=").concat(query);
 
-//        try {
-//            Thread.sleep(200);
-//        } catch (InterruptedException e) {
-//            log.info("naver search open api error : {}", e.getMessage());
-//        }
-
         final String response = client.method(HttpMethod.GET)
                 .uri(uri)
                 .header(NAVER_CLIENT_ID_HEADER, clientId)
