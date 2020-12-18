@@ -17,7 +17,6 @@
     "vue": "^2.6.12",
     "vue-axios": "^3.2.0",
     "vue-meta": "^2.4.0",
-    "vue-naver-maps": "^0.14.1",
     "vue-router": "^3.4.9",
     "vuex": "^3.6.0"
   },

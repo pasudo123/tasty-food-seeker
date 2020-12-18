@@ -68,7 +68,7 @@
         rows: 0,
         fetchBtnLoading: false,
         fetchTableLoading: false,
-        selected: null,
+        selected: 'ALL',
         locationOptions: [
           {text: '전체', value: 'ALL'},
           {text: '종로구', value: 'JONGNO_GU'},
@@ -95,7 +95,7 @@
           {text: '성북구', value: 'SEONGBUK_GU'},
           {text: '동대문구', value: 'DONGDAEMUN_GU'},
           {text: '성동구', value: 'SEONGDONG_GU'},
-          {text: '중구', value: 'JUNG_GU'},
+          {text: '중구', value: 'JUNG_GU'}
         ]
       }
     },
@@ -143,6 +143,9 @@
       gotoDetailRestaurant(item) {
         this.$router.push({name: 'ExploreDetail', params: {id: item.id}})
       }
+    },
+    created() {
+      this.exploreTastyLocation();
     }
   }
 </script>

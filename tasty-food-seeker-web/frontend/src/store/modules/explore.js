@@ -60,6 +60,11 @@ const mutations = {
     },
     setCurrentLocationItem(state, data) {
         state.currentLocationItem = data;
+    },
+    clearCurrentLocationItem(state) {
+        state.currentLocationItem.name = '';
+        state.currentLocationItem.roadAddress = '';
+        state.currentLocationItem.category = '';
     }
 }
 

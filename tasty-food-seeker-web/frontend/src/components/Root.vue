@@ -6,8 +6,6 @@
 
 <script>
 
-  // import NaverMap from './naver/NaverMap'
-
   export default {
     name: "Root",
     // components: { NaverMap },

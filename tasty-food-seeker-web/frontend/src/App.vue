@@ -22,6 +22,7 @@
     name: 'App',
     data() {
       return {
+        naverMapScriptId: 'naver-map-script',
         navExplore: false,
         navMap: false
       }
@@ -44,7 +45,7 @@
         }
 
         this.$router.push({name:name}).catch(() => {});
-      }
+      },
     },
   }
 </script>

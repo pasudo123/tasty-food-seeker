@@ -1,39 +1,41 @@
 <template>
   <div id="exploreDetail">
-    {{ this.currentLocationItem }}
-
-    <div id="current-map-container">
-      <naver-maps
-          :key="this.mapRender"
-          :width="this.mapWidth" :height="580"
-          :initLayers="this.initLayers"
-          :mapOptions="this.mapOptions"></naver-maps>
+    <div class="titleWrapper">
+      <div class="categoryText">{{this.currentLocationItem.category}}</div>
+      <h3 class="titleText">{{this.currentLocationItem.name}}</h3>
+      <span>{{this.currentLocationItem.roadAddress}}</span>
     </div>
-
+    <div id="current-map-container">
+      <div :id="this.naverMapTagName" style="width:100%;height:550px;">
+        <b-overlay
+            :show="mapLoading" no-wrap></b-overlay>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 
+  import NAVER_MAP from "@/util/naver-map";
   import {createNamespacedHelpers} from 'vuex'
 
   const {
-    mapActions: exploreMapActions,
-    mapGetters: exploreMapGetters
+      mapActions: exploreMapActions,
+      mapGetters: exploreMapGetters,
+      mapMutations: exploreMapMutation
   } = createNamespacedHelpers('explore')
 
   export default {
     name: "ExploreDetail",
     data() {
       return {
-        mapRender: true,
-        mapWidth: 1080,
-        initLayers: ['BACKGROUND', 'BACKGROUND_DETAIL', 'POI_KOREAN', 'TRANSIT'],
+        naverMapTagName: 'custom-naver-map',
+        mapLoading: false,
         mapOptions: {
-          zoom: 15,
+          zoom: 17,
           lat: 37,
           lng: 126
-        }
+        },
       }
     },
     computed: {
@@ -41,36 +43,49 @@
     },
     methods: {
       ...exploreMapActions(['fetchOneLocationById']),
-      initMap() {
+      ...exploreMapMutation(['clearCurrentLocationItem']),
+      naverMapInit() {
+        this.clearCurrentLocationItem();
+
         this.fetchOneLocationById(this.$route.params).then(() => {
           this.mapOptions.lat = this.currentLocationItem.lat;
           this.mapOptions.lng = this.currentLocationItem.lng;
-          this.mapRender = !this.mapRender;
+          NAVER_MAP.drawNaverMap(this.naverMapTagName, this.mapOptions);
         }).catch(() => {
-          this.mapRender = !this.mapRender;
+          NAVER_MAP.drawNaverMap(this.naverMapTagName, this.mapOptions);
         })
       },
-      initMapWidth() {
-        // width 를 현재 화면에 맞춤
-        let mapContainer = document.querySelector('#current-map-container');
-        this.mapWidth = mapContainer.offsetWidth - 1;
-      }
     },
     created() {
-
     },
     mounted() {
+      this.mapLoading = true;
       this.$nextTick(() =>{
-        this.initMap();
-        this.initMapWidth();
+        this.naverMapInit();
+        this.mapLoading = false;
       });
+    },
+    beforeDestroy() {
+      this.map = null;
     }
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .titleWrapper {
+    padding: 5px 0 10px 3px;
+    text-align: left;
+
+    .categoryText {
+      padding: 0 0 5px 0;
+    }
+
+    .titleText {
+      font-weight: 1000;
+    }
+  }
+
   #current-map-container {
-    /*border: 1px solid red;*/
     width: 100%;
   }
 </style>
