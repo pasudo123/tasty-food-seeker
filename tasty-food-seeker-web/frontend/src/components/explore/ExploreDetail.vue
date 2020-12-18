@@ -11,6 +11,33 @@
             :show="mapLoading" no-wrap></b-overlay>
       </div>
     </div>
+    <div class="blogItemsWrapper">
+      <b-table hover
+               primary-key="index"
+               sort-by.sync="title"
+               selectable
+               @row-selected="onRowSelected"
+               :select-mode="'single'"
+               :head-variant="'dark'"
+               :fields="this.blogTableFields"
+               :items="this.currentBlogItems">
+        <template #cell(index)="data">
+          {{ (data.index + 1) }}
+        </template>
+
+        <template #cell(title)="data">
+          <div class="titleDiv">
+            {{data.item.title}}
+          </div>
+        </template>
+
+        <template #cell(desc)="data">
+          <div class="descDiv">
+            {{data.item.desc}}
+          </div>
+        </template>
+      </b-table>
+    </div>
   </div>
 </template>
 
@@ -39,7 +66,7 @@
       }
     },
     computed: {
-      ...exploreMapGetters(['currentLocationItem'])
+      ...exploreMapGetters(['currentLocationItem', 'currentBlogItems', 'blogTableFields'])
     },
     methods: {
       ...exploreMapActions(['fetchOneLocationById']),
@@ -55,6 +82,10 @@
           NAVER_MAP.drawNaverMap(this.naverMapTagName, this.mapOptions);
         })
       },
+      onRowSelected(items) {
+        let currentSelectedItem = items[0];
+        window.open(`${currentSelectedItem.link}`, '_blank');
+      }
     },
     created() {
     },
@@ -87,5 +118,26 @@
 
   #current-map-container {
     width: 100%;
+    border: 2px solid darkslategray;
+  }
+
+  .blogItemsWrapper {
+    margin: 10px 0 0 0;
+  }
+</style>
+
+<style>
+  div.titleDiv {
+    width: 390px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  div.descDiv {
+    width: 390px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 </style>

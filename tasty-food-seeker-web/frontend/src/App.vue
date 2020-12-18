@@ -6,7 +6,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item :active=navExplore @click="goto('Explore')" >살펴보기</b-nav-item>
-          <b-nav-item :active=navMap @click="goto('Map')">지도</b-nav-item>
+<!--          <b-nav-item :active=navMap @click="goto('Map')">지도</b-nav-item>-->
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

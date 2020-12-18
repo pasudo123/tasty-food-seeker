@@ -13,13 +13,21 @@ const state = {
         totalElements: 0,
         totalPages: 0
     },
-    currentLocationItem: {}
+    currentLocationItem: {},
+    currentBlogItems: [],
+    blogTableFields: [
+        { key: 'index', label: '#', thClass: 'indexTh'},
+        { key: 'title', label: '제목', thClass: 'titleTh', sortable: true},
+        { key: 'desc', label: '설명', thClass: 'descTh'},
+    ]
 }
 
 const getters = {
     tableFields: (state) => state.tableFields,
     currentLocationItems: (state) => state.currentLocationItems,
-    currentLocationItem: (state) => state.currentLocationItem
+    currentLocationItem: (state) => state.currentLocationItem,
+    currentBlogItems: (state) => state.currentBlogItems,
+    blogTableFields: (state) => state.blogTableFields
 }
 
 const actions = {
@@ -39,16 +47,35 @@ const actions = {
         })
     },
 
-    fetchOneLocationById({commit}, params) {
+    fetchOneLocationById({dispatch, commit}, params) {
         const uri = `/api/restaurants/${params.id}`;
 
         return new Promise((resolve, reject) => {
             request.get(uri).then((response) => {
                 commit('setCurrentLocationItem', response);
                 resolve();
+                dispatch('fetchBlogInfosByName');
             }).catch(() => reject())
         })
     },
+
+    fetchBlogInfosByName({state, commit}) {
+        let roadAddresses = state.currentLocationItem.roadAddress.split(" ");
+        let category = state.currentLocationItem.category;
+        let name = state.currentLocationItem.name;
+        const uri = `/api/restaurants/blog`;
+        const queryParam = {};
+
+        // road 검색은 서울특별시 {자치구} {신주소} + {음식 카테고리} + {상호명} 으로 한다.
+        queryParam.name = `${roadAddresses[1]} ${roadAddresses[2]} ${category} ${name}`;
+
+        return new Promise((resolve, reject) => {
+           request.get(uri, {params: queryParam}).then((response) => {
+               commit('setCurrentBlogItems', response);
+               resolve();
+           }).catch(() => reject());
+        });
+    }
 }
 
 const mutations = {
@@ -65,6 +92,9 @@ const mutations = {
         state.currentLocationItem.name = '';
         state.currentLocationItem.roadAddress = '';
         state.currentLocationItem.category = '';
+    },
+    setCurrentBlogItems(state, data) {
+        state.currentBlogItems = data.restaurantBlogResponseDtos;
     }
 }
 
