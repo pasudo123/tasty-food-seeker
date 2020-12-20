@@ -3,6 +3,7 @@
     <div class="avatarWrapper">
       <b-avatar
           class="myAvatar"
+          src="@/assets/pray.jpg"
           size="100px">
       </b-avatar>
     </div>
