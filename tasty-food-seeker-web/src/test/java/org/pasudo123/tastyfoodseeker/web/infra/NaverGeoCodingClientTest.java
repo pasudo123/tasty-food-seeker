@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.pasudo123.tastyfoodseeker.web.config.WebClientConfiguration;
-import org.pasudo123.tastyfoodseeker.web.infra.pojo.NaverGeoItem;
+import org.pasudo123.tastyfoodseeker.web.infra.pojo.geo.NaverGeoItems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -35,7 +35,7 @@ class NaverGeoCodingClientTest {
         final String query = "서울특별시 노원구 동일로203가길 29 브라운스톤중계 101호";
 
         // when
-        final Optional<NaverGeoItem> itemOptional = geoCodingClient.getGeoByApi(query);
+        final Optional<NaverGeoItems> itemOptional = geoCodingClient.getGeoByApi(query);
 
         // then
         assertThat(itemOptional).isNotNull();

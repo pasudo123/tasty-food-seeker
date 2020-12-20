@@ -1,4 +1,4 @@
-package org.pasudo123.tastyfoodseeker.web.infra.pojo;
+package org.pasudo123.tastyfoodseeker.web.infra.pojo.geo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +11,7 @@ import java.util.Optional;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
-public class NaverGeoItem {
+public class NaverGeoItems {
 
     @JsonProperty("addresses")
     private List<NaverGeoAddressItem> naverGeoAddressItems;

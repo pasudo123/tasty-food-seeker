@@ -2,8 +2,7 @@ package org.pasudo123.tastyfoodseeker.web.infra;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.pasudo123.tastyfoodseeker.web.infra.params.GeoParams;
-import org.pasudo123.tastyfoodseeker.web.infra.pojo.NaverGeoItem;
+import org.pasudo123.tastyfoodseeker.web.infra.pojo.geo.NaverGeoItems;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -24,19 +23,19 @@ public class NaverGeoCodingClient {
     private static final String BASE_API = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode";
     private final WebClient client;
 
-    public Optional<NaverGeoItem> getGeoByApi(final String query) {
+    public Optional<NaverGeoItems> getGeoByApi(final String query) {
         if(query.isEmpty()) {
             return Optional.empty();
         }
 
         final String uri = BASE_API.concat("?query=").concat(query);
 
-        final NaverGeoItem response = client.method(HttpMethod.GET)
+        final NaverGeoItems response = client.method(HttpMethod.GET)
                 .uri(uri)
                 .header(NAVER_GC_API_KEY_ID_HEADER, clientId)
                 .header(NAVER_GC_API_KEY_HEADER, secretKey)
                 .retrieve()
-                .bodyToMono(NaverGeoItem.class)
+                .bodyToMono(NaverGeoItems.class)
                 .block();
 
         return Optional.ofNullable(response);

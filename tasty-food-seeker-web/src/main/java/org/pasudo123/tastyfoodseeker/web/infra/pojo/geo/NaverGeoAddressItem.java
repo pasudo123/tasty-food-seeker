@@ -1,4 +1,4 @@
-package org.pasudo123.tastyfoodseeker.web.infra.pojo;
+package org.pasudo123.tastyfoodseeker.web.infra.pojo.geo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

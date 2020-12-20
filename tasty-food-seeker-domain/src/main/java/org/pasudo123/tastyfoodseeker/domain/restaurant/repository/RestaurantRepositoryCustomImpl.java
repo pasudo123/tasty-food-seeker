@@ -1,6 +1,7 @@
 package org.pasudo123.tastyfoodseeker.domain.restaurant.repository;
 
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.pasudo123.tastyfoodseeker.domain.restaurant.model.Gu;
@@ -23,12 +24,20 @@ public class RestaurantRepositoryCustomImpl implements RestaurantRepositoryCusto
 
         final QueryResults<Restaurant> results = jpaQueryFactory
                 .selectFrom(restaurant)
-                .where(restaurant.gu.eq(paramGu))
+                .where(eqGu(paramGu))
                 .orderBy(restaurant.name.asc())
                 .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize())
                 .fetchResults();
 
         return new PageImpl<>(results.getResults(), pageRequest, results.getTotal());
+    }
+
+    private BooleanExpression eqGu(final Gu gu) {
+        if(gu.isAll()) {
+            return null;
+        }
+
+        return restaurant.gu.eq(gu);
     }
 }

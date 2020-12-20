@@ -49,4 +49,8 @@ public enum Gu {
     private boolean isInclude(final String address) {
         return address.contains(this.name);
     }
+
+    public boolean isAll() {
+        return this == ALL;
+    }
 }

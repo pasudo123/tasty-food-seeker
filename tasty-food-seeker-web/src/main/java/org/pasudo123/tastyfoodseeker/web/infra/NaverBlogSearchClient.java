@@ -2,6 +2,7 @@ package org.pasudo123.tastyfoodseeker.web.infra;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.pasudo123.tastyfoodseeker.web.infra.pojo.blog.NaverBlogItems;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -23,22 +24,21 @@ public class NaverBlogSearchClient {
 
     private final WebClient client;
 
-    public Optional<Object> getBlogsByApi(final String query) {
+    public Optional<NaverBlogItems> getBlogsByApi(final String query) {
         if (query.isEmpty()) {
             return Optional.empty();
         }
 
-        final String uri = BASE_API.concat("?display=20&query=").concat(query);
+        final String uri = BASE_API.concat("?display=50&query=").concat(query);
 
-        final String response = client.method(HttpMethod.GET)
+        final NaverBlogItems response = client.method(HttpMethod.GET)
                 .uri(uri)
                 .header(NAVER_CLIENT_ID_HEADER, clientId)
                 .header(NAVER_CLIENT_SECRET_HEADER, secretKey)
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToMono(NaverBlogItems.class)
                 .block();
 
-        log.info("response : {}", response);
-        return Optional.empty();
+        return Optional.ofNullable(response);
     }
 }

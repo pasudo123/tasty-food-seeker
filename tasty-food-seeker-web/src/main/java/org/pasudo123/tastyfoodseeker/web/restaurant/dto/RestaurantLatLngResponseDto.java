@@ -11,13 +11,13 @@ import java.util.Optional;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RestaurantResponseLatLngDto extends RestaurantResponseDto {
+public class RestaurantLatLngResponseDto extends RestaurantResponseDto {
 
     private Double lat;
     private Double lng;
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public RestaurantResponseLatLngDto(final Restaurant restaurant,
+    public RestaurantLatLngResponseDto(final Restaurant restaurant,
                                        final AdditionalInfo additionalInfo,
                                        final Optional<NaverGeoItems> optional) {
         super(restaurant, additionalInfo);

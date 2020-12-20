@@ -9,9 +9,9 @@ import org.pasudo123.tastyfoodseeker.domain.restaurant.pojo.AdditionalInfo;
 import org.pasudo123.tastyfoodseeker.web.exception.ErrorCode;
 import org.pasudo123.tastyfoodseeker.web.exception.detail.JsonConvertException;
 import org.pasudo123.tastyfoodseeker.web.infra.NaverGeoCodingClient;
-import org.pasudo123.tastyfoodseeker.web.infra.pojo.NaverGeoItem;
+import org.pasudo123.tastyfoodseeker.web.infra.pojo.geo.NaverGeoItems;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseDto;
-import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseLatLngDto;
+import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantLatLngResponseDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -40,9 +40,9 @@ public class RestaurantConvertService {
         return new RestaurantResponseDto(restaurant, mappingRestaurantToAdditionalInfo(restaurant));
     }
 
-    public RestaurantResponseLatLngDto entityToDtoIncludeGeo(final Restaurant restaurant) {
+    public RestaurantLatLngResponseDto entityToDtoIncludeGeo(final Restaurant restaurant) {
         final AdditionalInfo additionalInfo = mappingRestaurantToAdditionalInfo(restaurant);
-        final Optional<NaverGeoItem> geoItemOptional = geoCodingClient.getGeoByApi(restaurant.getRoadAddress());
-        return new RestaurantResponseLatLngDto(restaurant, additionalInfo, geoItemOptional);
+        final Optional<NaverGeoItems> geoItemOptional = geoCodingClient.getGeoByApi(restaurant.getRoadAddress());
+        return new RestaurantLatLngResponseDto(restaurant, additionalInfo, geoItemOptional);
     }
 }

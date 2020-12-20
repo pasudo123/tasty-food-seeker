@@ -9,7 +9,7 @@ import org.pasudo123.tastyfoodseeker.web.exception.detail.EntityEmptyException;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.PageRequestDto;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseDto;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseDtos;
-import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseLatLngDto;
+import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantLatLngResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +35,7 @@ public class RestaurantFetchService {
         return new RestaurantResponseDtos(dtos, restaurantPages);
     }
 
-    public RestaurantResponseLatLngDto fetchOneById(final long id) {
+    public RestaurantLatLngResponseDto fetchOneById(final long id) {
         final Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new EntityEmptyException(
                         ErrorCode.ENTITY_EMPTY_EXCEPTION,
