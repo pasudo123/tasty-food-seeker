@@ -1,9 +1,18 @@
 <template>
   <div id="exploreDetail">
-    <div class="titleWrapper">
-      <div class="categoryText">{{this.currentLocationItem.category}}</div>
-      <h3 class="titleText">{{this.currentLocationItem.name}}</h3>
-      <span>{{this.currentLocationItem.roadAddress}}</span>
+    <div class="headerWrapper">
+      <div class="titleWrapper">
+        <div class="categoryText">{{ this.currentLocationItem.category }}</div>
+        <h3 class="titleText">{{ this.currentLocationItem.name }}</h3>
+        <span>{{ this.currentLocationItem.roadAddress }}</span>
+      </div>
+      <div class="backBtnWrapper">
+        <b-button class="backBtn"
+                  variant="outline-secondary"
+                  @click="backToExplore">
+          목록보기
+        </b-button>
+      </div>
     </div>
     <div id="current-map-container">
       <div :id="this.naverMapTagName" style="width:100%;height:550px;">
@@ -27,13 +36,13 @@
 
         <template #cell(title)="data">
           <div class="titleDiv">
-            {{data.item.title}}
+            {{ data.item.title }}
           </div>
         </template>
 
         <template #cell(desc)="data">
           <div class="descDiv">
-            {{data.item.desc}}
+            {{ data.item.desc }}
           </div>
         </template>
       </b-table>
@@ -43,15 +52,14 @@
 
 <script>
 
-  
 
   import NAVER_MAP from "@/util/naver-map";
   import {createNamespacedHelpers} from 'vuex'
 
   const {
-      mapActions: exploreMapActions,
-      mapGetters: exploreMapGetters,
-      mapMutations: exploreMapMutation
+    mapActions: exploreMapActions,
+    mapGetters: exploreMapGetters,
+    mapMutations: exploreMapMutation
   } = createNamespacedHelpers('explore')
 
   export default {
@@ -87,13 +95,15 @@
       onRowSelected(items) {
         let currentSelectedItem = items[0];
         window.open(`${currentSelectedItem.link}`, '_blank');
+      },
+      backToExplore(event) {
+        history.back();
+        // console.debug(event);
       }
-    },
-    created() {
     },
     mounted() {
       this.mapLoading = true;
-      this.$nextTick(() =>{
+      this.$nextTick(() => {
         this.naverMapInit();
         this.mapLoading = false;
       });
@@ -104,42 +114,55 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  .titleWrapper {
-    padding: 5px 0 10px 3px;
-    text-align: left;
+<style lang="scss">
+  #exploreDetail {
+    .headerWrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-    .categoryText {
-      padding: 0 0 5px 0;
+      .titleWrapper {
+        padding: 5px 0 10px 3px;
+        text-align: left;
+
+        .categoryText {
+          padding: 0 0 5px 0;
+        }
+
+        .titleText {
+          font-weight: 1000;
+        }
+      }
+
+      .backBtnWrapper {
+        .backBtn {
+          width: 100px;
+          height: 40px;
+        }
+      }
     }
 
-    .titleText {
-      font-weight: 1000;
+    #current-map-container {
+      width: 100%;
+      border: 2px solid darkslategray;
     }
-  }
 
-  #current-map-container {
-    width: 100%;
-    border: 2px solid darkslategray;
-  }
+    .blogItemsWrapper {
+      margin: 10px 0 0 0;
+    }
 
-  .blogItemsWrapper {
-    margin: 10px 0 0 0;
-  }
-</style>
+    div.titleDiv {
+      width: 390px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
 
-<style>
-  div.titleDiv {
-    width: 390px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-  div.descDiv {
-    width: 390px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    div.descDiv {
+      width: 390px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 </style>

@@ -64,6 +64,6 @@
 
 <style scoped>
   .activeContainer {
-    margin-top: 5px;
+    margin-top: 10px;
   }
 </style>

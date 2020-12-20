@@ -1,20 +1,26 @@
 <template>
   <div id="root">
+    <home />
     <router-view />
   </div>
 </template>
 
 <script>
 
+  import Home from '@/components/home/Home'
+
   export default {
     name: "Root",
-    // components: { NaverMap },
+    components: { Home },
     data() {
       return {
 
       }
     },
     methods: {
+
+    },
+    created() {
     },
     metaInfo() {
       return {

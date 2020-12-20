@@ -22,10 +22,5 @@ export default new Router({
       name: 'ExploreDetail',
       component: () => import('../components/explore/ExploreDetail')
     },
-    {
-      path: '/map',
-      name: 'Map',
-      component: () => import('../components/explore/Explore')
-    }
   ]
 })

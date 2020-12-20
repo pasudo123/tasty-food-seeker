@@ -1,5 +1,8 @@
 <template>
   <div id="explore">
+    <div class="exploreTextWrapper">
+       검색할 장소를 선택해서 음식점을 조회해보세요 !
+    </div>
     <div class="selectorWrapper">
       <b-input-group>
         <template #prepend>
@@ -28,14 +31,15 @@
 
           <template #cell(roadAddress)="data">
             <div class="addressDiv">
-              {{data.item.roadAddress}}
+              {{ data.item.roadAddress }}
             </div>
           </template>
 
           <template #cell(detail)="data">
             <b-icon icon="arrow-up-right-circle"
+                    class="arrow-btn"
                     style="width: 18px; height: 18px; vertical-align:middle; cursor: pointer;"
-                    @click="gotoDetailRestaurant(data.item)" />
+                    @click="gotoDetailRestaurant(data.item)"/>
           </template>
         </b-table>
       </b-overlay>
@@ -55,7 +59,8 @@
 
   const {
     mapActions: exploreMapActions,
-    mapGetters: exploreMapGetters
+    mapGetters: exploreMapGetters,
+    mapMutations: exploreMapMutations
   } = createNamespacedHelpers('explore')
 
   export default {
@@ -100,10 +105,11 @@
       }
     },
     computed: {
-      ...exploreMapGetters(['currentLocationItems', 'tableFields'])
+      ...exploreMapGetters(['historyInfos', 'currentLocationItems', 'tableFields'])
     },
     methods: {
       ...exploreMapActions(['fetchLocationByGu']),
+      ...exploreMapMutations(['setHistoryInfos', 'clearHistoryInfos']),
 
       exploreTastyLocation() {
         this.currentPage = 1;
@@ -127,9 +133,11 @@
       changeCurrentPage(currentPage) {
         const params = {}
 
+        this.currentPage = currentPage;
+
         this.fetchTableLoading = true;
         params.selected = this.selected;
-        params.currentPage = currentPage;
+        params.currentPage = this.currentPage;
         params.size = this.perPage;
         this.fetchLocationByGu(params).then(() => {
           this.items = this.currentLocationItems.items;
@@ -141,17 +149,37 @@
       },
 
       gotoDetailRestaurant(item) {
-        this.$router.push({name: 'ExploreDetail', params: {id: item.id}})
+        this.$router.push({name: 'ExploreDetail', params: {id: item.id}}, () => {
+          // selected & currentPage 만 보관
+          const params = {};
+          params.selected = this.selected;
+          params.currentPage = this.currentPage;
+          this.setHistoryInfos(params);
+        })
       }
     },
     created() {
+
+      // 이전 페이지 정보 여부 확인
+      if (Object.keys(this.historyInfos).length !== 0) {
+        this.selected = this.historyInfos.selected;
+        this.changeCurrentPage(this.historyInfos.currentPage);
+        this.clearHistoryInfos();
+        return;
+      }
+
       this.exploreTastyLocation();
     }
   }
 </script>
 
 <style lang="scss">
-  #search {
+  #explore {
+    .exploreTextWrapper {
+      text-align: left;
+      padding: 0 0 10px 0;
+    }
+
     .locationLabel {
       padding: 0 25px;
     }
@@ -164,42 +192,41 @@
     }
 
     .tableWrapper {
-      margin: 20px 0 5px 0;
+      margin: 5px 0 0 0;
     }
-  }
-</style>
 
-<style>
+    .locationLabel {
+      padding: 0 30px;
+    }
 
-  .locationLabel {
-    padding: 0 30px;
-  }
+    .exploreBtn {
+      padding: 0 30px;
+      height: 100%;
+    }
 
-  .exploreBtn {
-    padding: 0 30px;
-    height: 100%;
-  }
+    th.indexTh {
+      width: 50px;
+    }
 
-  th.indexTh {
-    width: 50px;
-  }
+    th.categoryTh {
+      width: 200px;
+    }
 
-  th.categoryTh {
-    width: 200px;
-  }
+    div.addressDiv {
+      width: 260px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
 
-  div.addressDiv {
-    width: 260px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
+    th.moreTh {
+      width: 70px;
+    }
 
-  th.moreTh {
-    width: 70px;
-  }
-
-  td.moreTd {
-
+    .arrow-btn:hover {
+      color: mediumblue;
+      width: 25px !important;
+      height: 25px !important;
+    }
   }
 </style>

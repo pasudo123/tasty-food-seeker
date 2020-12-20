@@ -1,6 +1,7 @@
 import request from '../../util/request'
 
 const state = {
+    historyInfos: {},
     tableFields: [
         { key: 'index', label: '#', thClass: 'indexTh'},
         { key: 'name', label: '가게명', thClass: 'nameTh'},
@@ -23,6 +24,7 @@ const state = {
 }
 
 const getters = {
+    historyInfos: (state) => state.historyInfos,
     tableFields: (state) => state.tableFields,
     currentLocationItems: (state) => state.currentLocationItems,
     currentLocationItem: (state) => state.currentLocationItem,
@@ -79,6 +81,13 @@ const actions = {
 }
 
 const mutations = {
+    setHistoryInfos(state, params) {
+        state.historyInfos.selected = params.selected;
+        state.historyInfos.currentPage = params.currentPage;
+    },
+    clearHistoryInfos(state) {
+        state.historyInfos = {};
+    },
     setCurrentLocationItems(state, data) {
         state.currentLocationItems.items = [];
         state.currentLocationItems.items = data.restaurantResponseDtos;
