@@ -1,6 +1,7 @@
 package org.pasudo123.tastyfoodseeker.crawl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.pasudo123.tastyfoodseeker.crawl.component.TastyFoodSeekExplorer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -8,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
 
+@Slf4j
 @SpringBootApplication
 @RequiredArgsConstructor
 @ComponentScan(value = {"org.pasudo123.tastyfoodseeker.*"})
@@ -21,6 +23,7 @@ public class CrawlApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		explorer.doExploring(2020, 10);
+		log.info("do crawl");
+//		explorer.doExploring(2020, 10);
 	}
 }
