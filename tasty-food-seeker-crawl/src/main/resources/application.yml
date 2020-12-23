@@ -23,11 +23,26 @@ spring:
   profiles: dev
 
 web-driver:
-  path: "C:\\develop\\workspace\\tasty-food-seeker\\tasty-food-seeker-crawl\\src\\main\\resources\\chromedriver.exe"
+  path: "C:\develop\workspace\tasty-food-seeker\chromedriver.exe"
 
 ---
 spring:
   profiles: prod
 
+  datasource:
+    url: jdbc:mysql://tasty-food-seeker_storage:30666/tasty-food-seeker?useSSL=false&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=Asia/Seoul
+    username: root
+    password: rootpass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    platform: mysql
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    hibernate:
+      ddl-auto: validate
+    generate-ddl: false
+    show-sql: false
+    properties.hibernate.format_sql: false
+    open-in-view: false
+
 web-driver:
-  path: "http://localhost:14444/wd/hub"
+  path: "http://selenium_hub:14444/wd/hub"

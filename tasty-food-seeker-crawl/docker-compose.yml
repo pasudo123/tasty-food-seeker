@@ -1,0 +1,45 @@
+version: "3"
+services:
+  tasty-food-seeker_storage:
+    image: library/mysql:8.0
+    environment:
+      MYSQL_DATABASE: tasty-food-seeker
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 30666:3306
+
+  selenium_hub:
+    image: selenium/hub
+    ports:
+      - 30444:4444
+    environment:
+      GRID_MAX_SESSION: 4
+      GRID_BROWER_TIMEOUT: 3000
+      GRID_TIMEOUT: 3000
+
+  tasty-food-seeker_chrome:
+    image: selenium/node-chrome
+    depends_on:
+      - selenium_hub
+    environment:
+      HUB_PORT_4444_TCP_ADDR: selenium_hub
+      HUB_PORT_4444_TCP_PORT: 30444
+      NODE_MAX_SESSION: 4
+      NODE_MAX_INSTANCE: 4
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - 39001:5900
+    links:
+      - selenium_hub
+
+  tasty-food-seeker_crawl:
+    depends_on:
+      - tasty-food-seeker_chrome
+      - tasty-food-seeker_storage
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 30580:8080

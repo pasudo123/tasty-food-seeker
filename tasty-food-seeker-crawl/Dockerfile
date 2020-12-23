@@ -1,13 +1,19 @@
-# multi stage images
-FROM        adoptopenjdk:11-jre-hotspot as builder
-LABEL       maintainer="pasudo123"
-ARG         JAR_FILE=build/libs/*.jar
-COPY        ${JAR_FILE} application.jar
-RUN         java -Djarmode=layertools -jar application.jar extract
+# multi stage dockerfile
+#FROM        adoptopenjdk:11-jre-hotspot as builder
+#LABEL       maintainer="pasudo123 <pasudo123@naver.com>"
+#WORKDIR     /workspace/app
+#ARG         JAR_FILE=build/libs/*.jar
+#COPY        ${JAR_FILE} /workspace/app
+#RUN         mkdir -p build/dependency &&\
+#            cd build/dependency; jar -xf ../libs/*.jar
 
-FROM        openjdk11:alpine-jre
-EXPOSE      10428
-LABEL       maintainer="pasudo123"
-WORKDIR     application
+FROM        adoptopenjdk:11-jre-hotspot
+LABEL       maintainer="pasudo123 <pasudo123@naver.com>"
+ARG         JAR_FILE=build/libs/*.jar
+COPY        ${JAR_FILE} app.jar
+#ARG         DEPENDENCY=build/dependency
+#COPY        ${DEPENDENCY}/BOOT-INF/lib      /application/lib
+#COPY        ${DEPENDENCY}/META-INF          /application/META-INF
+#COPY        ${DEPENDENCY}/BOOT-INF/classes  /application
 ENV         TZ Asia/Seoul
-ENTRYPOINT  ["java", "-jar", "./application.jar"]
+ENTRYPOINT  ["java", "-jar", "-Dspring.profiles.active=prod", "./app.jar"]
