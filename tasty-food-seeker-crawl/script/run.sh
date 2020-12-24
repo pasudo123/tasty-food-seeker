@@ -1,36 +1,28 @@
 #!/bin/bash
+# shellcheck disable=SC2012
 
+RED_COLOR='\e[31m'
 CYAN_COLOR='\e[96m'
 GREEN_COLOR='\e[32m'
 DEFAULT_COLOR='\e[39m'
 
-buildDirectory="build/libs/*"
+buildDirectory="build/libs/"
 appName="tasty-food-seeker-crawl"
 
-cd ../
+cd ../../
 
-#echo -e "\n===> ${GREEN_COLOR}remove${DEFAULT_COLOR} jar files"
-#removeJarFiles="rm -r ${buildDirectory}"
-#$removeJarFiles
-#
-#cd ../
-#
 #echo -e "\n===> ${GREEN_COLOR}build${DEFAULT_COLOR} jar file"
 #buildJarFile="./gradlew :${appName}:bootJar"
 #$buildJarFile
-#
-#cd ${appName} || exit
+
+cd ${appName} || exit
 
 echo -e "\n===> ${GREEN_COLOR}fetch${DEFAULT_COLOR} latest jar file"
-fetchLatestJarFile="ls -al ${buildDirectory}"
-$fetchLatestJarFile
-
-## using Dockerfile
-#echo -e "\n===> ${CYAN_COLOR}build dockerFile${DEFAULT_COLOR}"
-#dockerBuildCommand="docker build -t tasty-food-seeker-crawl:latest ."
-#$dockerBuildCommand
+fetchLatestJarFile=`ls -t "$buildDirectory" | head -1`
+latestJar=$fetchLatestJarFile
+echo -e "\n===> latest jar :: ${RED_COLOR}${latestJar}${DEFAULT_COLOR}"
 
 # using docker-compose.yml
+# jar 파일은 하나만 있어야 한다.
 echo -e "\n===> ${CYAN_COLOR}using docker-compose.yml${DEFAULT_COLOR}"
-dockerComposeCommand="docker-compose up -d --build"
-$dockerComposeCommand
+LATEST_JAR="$latestJar" docker-compose up -d --build
