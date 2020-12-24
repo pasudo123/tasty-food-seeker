@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class SeleniumConfiguration {
 
-    @Value("${web-driver.path:http://localhost:14444/wd/hub}")
+    @Value("${web-driver.path:http://selenium_hub:4444/wd/hub}")
     private String webDriverPath;
 
     @Profile("dev")
@@ -37,7 +37,7 @@ public class SeleniumConfiguration {
             // headless 설정 및 selenium container 이용
             final ChromeOptions opt = new ChromeOptions();
             opt.addArguments("--headless");
-            
+
             final WebDriver driver = new RemoteWebDriver(new URL(webDriverPath), opt);
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 

@@ -6,10 +6,11 @@ task buildVersion {
 	file.withWriter {versionProps.store(it, null)}
 }
 
+// $ ./gradlew :tasty-food-seeker-crawl:bootJar
 bootJar {
 	dependsOn buildVersion
 	doLast {
-		println "${project.name} bootJar completed"
+		println "==> ${project.name} bootJar task completed"
 	}
 }
 

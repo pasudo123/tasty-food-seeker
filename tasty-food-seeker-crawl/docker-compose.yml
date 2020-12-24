@@ -1,6 +1,6 @@
 version: "3"
 services:
-  tasty-food-seeker_storage:
+  tasty-food-seeker-storage:
     image: library/mysql:8.0
     environment:
       MYSQL_DATABASE: tasty-food-seeker
@@ -8,38 +8,51 @@ services:
       MYSQL_ROOT_HOST: '%'
     ports:
       - 30666:3306
+    container_name: tasty_food_seeker_storage
+    cap_add:
+      - SYS_NICE
 
-  selenium_hub:
+  selenium-hub:
     image: selenium/hub
     ports:
       - 30444:4444
     environment:
-      GRID_MAX_SESSION: 4
+      GRID_MAX_SESSION: 2
       GRID_BROWER_TIMEOUT: 3000
       GRID_TIMEOUT: 3000
+    container_name: selenium_hub
 
-  tasty-food-seeker_chrome:
+
+  tasty-food-seeker-chrome:
     image: selenium/node-chrome
     depends_on:
-      - selenium_hub
+      - selenium-hub
     environment:
       HUB_PORT_4444_TCP_ADDR: selenium_hub
-      HUB_PORT_4444_TCP_PORT: 30444
-      NODE_MAX_SESSION: 4
-      NODE_MAX_INSTANCE: 4
+      HUB_PORT_4444_TCP_PORT: 4444
+      NODE_MAX_SESSION: 2                       # 리모트 시스템에서 한번에 병렬로 실행할 수 있는 브라우저의 수
+      NODE_MAX_INSTANCE: 2                      # 리모트 시스템에서 실행할 수 있는 동일 버전의 브라우저 인스턴스 수
     volumes:
       - /dev/shm:/dev/shm
     ports:
       - 39001:5900
     links:
-      - selenium_hub
+      - selenium-hub
+    container_name: tasty_food_seeker_chrome
 
-  tasty-food-seeker_crawl:
+
+  tasty-food-seeker-crawl:
     depends_on:
-      - tasty-food-seeker_chrome
-      - tasty-food-seeker_storage
+      - tasty-food-seeker-chrome
+      - tasty-food-seeker-storage
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - LATEST_JAR=${LATEST_JAR}
+    image: tasty_food_seeker_crawl:latest
     ports:
       - 30580:8080
+    networks:
+      - default                                 # default 네트워크 추가 : 호스트 내 컨테이너 간 통신 (포트포워딩하지 않음)
+    container_name: tasty_food_seeker_crawl
