@@ -17,7 +17,7 @@ services:
     ports:
       - 30444:4444
     environment:
-      GRID_MAX_SESSION: 2
+      GRID_MAX_SESSION: 1
       GRID_BROWER_TIMEOUT: 3000
       GRID_TIMEOUT: 3000
     container_name: selenium_hub
@@ -30,14 +30,14 @@ services:
     environment:
       HUB_PORT_4444_TCP_ADDR: selenium_hub
       HUB_PORT_4444_TCP_PORT: 4444
-      NODE_MAX_SESSION: 2                       # 리모트 시스템에서 한번에 병렬로 실행할 수 있는 브라우저의 수
-      NODE_MAX_INSTANCE: 2                      # 리모트 시스템에서 실행할 수 있는 동일 버전의 브라우저 인스턴스 수
+      NODE_MAX_SESSION: 1                       # 리모트 시스템에서 한번에 병렬로 실행할 수 있는 브라우저의 수
+      NODE_MAX_INSTANCE: 1                      # 리모트 시스템에서 실행할 수 있는 동일 버전의 브라우저 인스턴스 수
     volumes:
       - /dev/shm:/dev/shm
     ports:
       - 39001:5900
-    links:
-      - selenium-hub
+    networks:
+      - default
     container_name: tasty_food_seeker_chrome
 
 

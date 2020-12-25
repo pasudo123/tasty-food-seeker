@@ -70,10 +70,15 @@ public class Restaurant {
         return Hashing.sha256().
                 hashString(concatString, StandardCharsets.UTF_8)
                 .toString()
-                .substring(0, 32);
+                .substring(0, 16);
     }
 
+    /**
+     * 마지막 꺽쇠 기준으로 카테고리를 하나로 추출해서 반환한다.
+     * ex) 음식점>카페,디저트>카페 => 카페
+     * @return
+     */
     public String getCategory() {
-        return category.substring(category.indexOf(BRACKET) + 1).strip();
+        return category.substring(category.lastIndexOf(BRACKET) + 1).strip();
     }
 }
