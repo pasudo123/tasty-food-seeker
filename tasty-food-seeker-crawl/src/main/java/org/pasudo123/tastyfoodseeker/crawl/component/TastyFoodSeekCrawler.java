@@ -16,10 +16,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TastyFoodSeekCrawler {
 
-    private final WebDriver webDriver;
+    private final TastyFoodSeekerValidator validator;
     private final CrawlDataPipelineService crawlDataPipelineService;
+    private WebDriver webDriver;
 
-    public void doCrawl(final String currentViewingPageUrl) {
+    public void doCrawl(final WebDriver webDriver, final String currentViewingPageUrl) {
+        this.checkParams(webDriver, currentViewingPageUrl);
+        this.webDriver = webDriver;
         webDriver.get(currentViewingPageUrl);
 
         final List<UsageLocation> usageLocations = new ArrayList<>();
@@ -47,6 +50,11 @@ public class TastyFoodSeekCrawler {
         }
 
         usageLocations.clear();
+    }
+
+    private void checkParams(final WebDriver webDriver, final String currentViewingPageUrl) {
+        validator.isValidDriver(webDriver);
+        validator.isValidUrl(currentViewingPageUrl);
     }
 
     private void historyBack() {

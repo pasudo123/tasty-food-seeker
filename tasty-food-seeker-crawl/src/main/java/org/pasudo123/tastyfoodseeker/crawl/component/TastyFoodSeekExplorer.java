@@ -6,9 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.pasudo123.tastyfoodseeker.crawl.constants.TastyFoodSeekXPath;
-import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocation;
+import org.pasudo123.tastyfoodseeker.crawl.exception.WebDriverInitializeException;
+import org.pasudo123.tastyfoodseeker.crawl.exception.code.ErrorCode;
+import org.pasudo123.tastyfoodseeker.util.WebDriverGenerator;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,12 +22,21 @@ public class TastyFoodSeekExplorer {
 
     private static final String CRAWL_URL = "http://opengov.seoul.go.kr/expense/seoul";
     private static final int INIT_PAGE = 1;
-
     private final AtomicInteger currentPage = new AtomicInteger(INIT_PAGE);
-    private final WebDriver webDriver;
+    private final WebDriverGenerator generator;
+    private final TastyFoodSeekerValidator validator;
     private final TastyFoodSeekCrawler crawler;
 
+    private WebDriver webDriver;
+
+    @PostConstruct
+    public void init() {
+        this.webDriver = generator.generate()
+                .orElseThrow(() -> new WebDriverInitializeException(ErrorCode.WEB_DRIVER_INIT_EXCEPTION));
+    }
+
     public void doExploring(final int year, final int month) {
+        this.checkParams(year, month);
         this.openBrowser();
         this.selectYearAndMonth(year, month);
         this.searchBtnClick();
@@ -33,18 +45,23 @@ public class TastyFoodSeekExplorer {
         while(this.isNextPage()) {
             log.info("current viewing page : {}", webDriver.getCurrentUrl());
             final String currentViewingPageUrl = webDriver.getCurrentUrl();
-            crawler.doCrawl(currentViewingPageUrl);
+            crawler.doCrawl(webDriver, currentViewingPageUrl);
         }
 
-        this.closeBrowser();
+        this.closeAndQuitBrowser();
+    }
+
+    private void checkParams(final int year, final int month) {
+        validator.isValidYearAndMonth(year, month);
     }
 
     private void openBrowser() {
         webDriver.get(CRAWL_URL);
     }
 
-    private void closeBrowser() {
+    public void closeAndQuitBrowser() {
         webDriver.close();
+        webDriver.quit();
     }
 
     /**
