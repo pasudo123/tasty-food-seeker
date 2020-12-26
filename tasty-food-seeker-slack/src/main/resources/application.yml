@@ -1,0 +1,11 @@
+
+slack:
+  token: ${override.slack.token}
+  channelId: ${override.slack.channelId}
+
+---
+spring:
+  profiles: dev
+---
+spring:
+  profiles: prod

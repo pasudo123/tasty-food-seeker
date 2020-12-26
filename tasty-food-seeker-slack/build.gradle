@@ -1,2 +1,14 @@
+jar {
+    enabled = true
+}
+
+bootJar {
+    enabled = false
+}
+
 dependencies {
+    // [slack]
+    // https://search.maven.org/search?q=g:com.hubspot.slack
+    implementation 'com.hubspot.slack:slack-java-client:1.12'
+    implementation 'com.hubspot.slack:slack-base:1.12'
 }

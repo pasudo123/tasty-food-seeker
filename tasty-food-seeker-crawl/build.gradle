@@ -15,7 +15,7 @@ bootJar {
 }
 
 dependencies {
-
+	implementation project(":tasty-food-seeker-slack")
 	implementation project(":tasty-food-seeker-domain")
 
 	// [jsoup]
