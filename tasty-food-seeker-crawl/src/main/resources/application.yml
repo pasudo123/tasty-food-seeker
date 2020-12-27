@@ -3,6 +3,7 @@ spring:
     active: dev
     include:
       - secret
+      - slack
   datasource:
     url: jdbc:mysql://localhost:3306/tasty-food-seeker?useSSL=false&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=Asia/Seoul
     username: root

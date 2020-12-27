@@ -1,5 +1,0 @@
-
-override:
-  slack:
-    token: 'xoxb-922790270535-1567726653968-gf4qhjphc5HJdXn1DBuWgxdG'
-    channelId: 'C01HTNPALS0'
