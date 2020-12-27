@@ -11,7 +11,7 @@ import org.pasudo123.tastyfoodseeker.crawl.exception.WebDriverInitializeExceptio
 import org.pasudo123.tastyfoodseeker.crawl.exception.code.ErrorCode;
 import org.pasudo123.tastyfoodseeker.crawl.noti.CrawlEventCode;
 import org.pasudo123.tastyfoodseeker.crawl.noti.NotificationService;
-import org.pasudo123.tastyfoodseeker.util.WebDriverGenerator;
+import org.pasudo123.tastyfoodseeker.crawl.util.WebDriverGenerator;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;

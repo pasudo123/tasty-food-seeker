@@ -1,4 +1,4 @@
-package org.pasudo123.tastyfoodseeker.util;
+package org.pasudo123.tastyfoodseeker.crawl.util;
 
 import info.debatty.java.stringsimilarity.JaroWinkler;
 

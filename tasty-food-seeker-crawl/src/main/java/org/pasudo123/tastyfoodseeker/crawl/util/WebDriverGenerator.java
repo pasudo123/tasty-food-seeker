@@ -1,4 +1,4 @@
-package org.pasudo123.tastyfoodseeker.util;
+package org.pasudo123.tastyfoodseeker.crawl.util;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.pasudo123.tastyfoodseeker.crawl.pojo.UsageLocationInfo;
-import org.pasudo123.tastyfoodseeker.util.TextSimilarityAlgorithm;
+import org.pasudo123.tastyfoodseeker.crawl.util.TextSimilarityAlgorithm;
 
 import java.util.List;
 import java.util.Optional;
