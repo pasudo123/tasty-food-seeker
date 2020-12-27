@@ -1,3 +1,6 @@
+spring:
+  profiles:
+    include: override
 
 slack:
   token: ${override.slack.token}
@@ -6,6 +9,7 @@ slack:
 ---
 spring:
   profiles: dev
+
 ---
 spring:
   profiles: prod

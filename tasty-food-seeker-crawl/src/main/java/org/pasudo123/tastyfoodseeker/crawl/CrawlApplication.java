@@ -2,16 +2,15 @@ package org.pasudo123.tastyfoodseeker.crawl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.pasudo123.tastyfoodseeker.crawl.component.TastyFoodSeekExplorer;
-import org.pasudo123.tastyfoodseeker.crawl.config.SeleniumConfiguration;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+
+import java.util.Arrays;
 
 @Slf4j
 @SpringBootApplication
@@ -31,6 +30,7 @@ public class CrawlApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		log.info("args : {}", Arrays.toString(Arrays.stream(args).toArray()));
 		log.info("====> do crawl");
 	}
 }
