@@ -23,21 +23,20 @@ public class CrawlApplication {
 		ConfigurableApplicationContext context = new SpringApplicationBuilder(CrawlApplication.class)
 				.web(WebApplicationType.NONE) 	// web application NONE 타입
 				.run(args);						// command-line args 추가.
-
 		TastyFoodSeekExplorer bean = context.getBean(TastyFoodSeekExplorer.class);
 		bean.closeAndQuitBrowser();
 		context.close();
 	}
 
 	@Bean
-	public ApplicationRunner applicationRunner(final TastyFoodSeekExplorer explorer,
-											   final SlackMessenger slackMessenger) {
+	public ApplicationRunner applicationRunner(final TastyFoodSeekExplorer explorer) {
 		return args -> {
 			final int year = Integer.parseInt(args.getOptionValues(OPT_YEAR).get(0));
 			final int month = Integer.parseInt(args.getOptionValues(OPT_MONTH).get(0));
 			log.info("=============================");
 			log.info(":: crawling date :: {}", String.format("%4d/%2d", year, month));
 			log.info("=============================\n");
-			explorer.doExploring(year, month);		};
+			explorer.doExploring(year, month);
+		};
 	}
 }
