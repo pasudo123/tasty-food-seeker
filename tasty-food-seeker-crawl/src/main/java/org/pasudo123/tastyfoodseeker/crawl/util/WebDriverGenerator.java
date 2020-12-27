@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -39,10 +41,11 @@ public class WebDriverGenerator {
         // prod + etc
         try {
             final ChromeOptions opt = new ChromeOptions();
-            opt.addArguments("--headless");
+            opt.addArguments("--mute-audio");
+            opt.setHeadless(true);
             final URL url = new URL(webDriverPath);
             final WebDriver driver = new RemoteWebDriver(url, opt);
-            driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             return Optional.of(driver);
         } catch (MalformedURLException e) {
             log.error("web driver initialize exception : {}", e.getMessage());

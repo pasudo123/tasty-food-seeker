@@ -4,10 +4,14 @@ ARG         LATEST_JAR
 ARG         YEAR
 ARG         MONTH
 ARG         JAR_FILE=build/libs/${LATEST_JAR}
-RUN         echo "$LATEST_JAR, $YEAR, $MONTH}"
-RUN         echo "$JAR_FILE"
+RUN         echo "$LATEST_JAR, $YEAR, $MONTH"
+#COPY        script/app_run.sh run.sh
 COPY        ${JAR_FILE} app.jar
-ENV         PARAM_YEAR=${YEAR}
-ENV         PARAM_MONTH=${MONTH}
 ENV         TZ Asia/Seoul
-ENTRYPOINT  ["java", "-jar", "-Dspring.profiles.active=prod", "./app.jar", "--crawl.year=${PARAM_YEAR}", "--crawl.month=${PARAM_MONTH}"]
+ENV         PARAM_YEAR=$YEAR
+ENV         PARAM_MONTH=$MONTH
+# https://stackoverflow.com/questions/37904682/how-do-i-use-docker-environment-variable-in-entrypoint-array
+# https://docs.docker.com/engine/reference/builder/#exec-form-entrypoint-example
+# 차이점을 이해해야 한다.
+ENTRYPOINT  java -jar -Dspring.profiles.active=prod ./app.jar --crawl.year=$PARAM_YEAR --crawl.month=$PARAM_MONTH
+#ENTRYPOINT  ["java", "-jar", "-Dspring.profiles.active=prod", "./app.jar", "--crawl.year=echo $PARAM_YEAR", "--crawl.month=echo $PARAM_MONTH"]

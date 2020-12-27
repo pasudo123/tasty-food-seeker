@@ -11,6 +11,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+import java.util.Arrays;
+
 @Slf4j
 @SpringBootApplication
 @ComponentScan(value = {"org.pasudo123.tastyfoodseeker.*"})
@@ -23,8 +25,8 @@ public class CrawlApplication {
 		ConfigurableApplicationContext context = new SpringApplicationBuilder(CrawlApplication.class)
 				.web(WebApplicationType.NONE) 	// web application NONE 타입
 				.run(args);						// command-line args 추가.
-		TastyFoodSeekExplorer bean = context.getBean(TastyFoodSeekExplorer.class);
-		bean.closeAndQuitBrowser();
+//		TastyFoodSeekExplorer bean = context.getBean(TastyFoodSeekExplorer.class);
+//		bean.closeAndQuitBrowser();
 		context.close();
 	}
 
