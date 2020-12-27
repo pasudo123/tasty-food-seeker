@@ -25,4 +25,4 @@ echo -e "\n===> latest jar :: ${RED_COLOR}${latestJar}${DEFAULT_COLOR}"
 # using docker-compose.yml
 # jar 파일은 하나만 있어야 한다.
 echo -e "\n===> ${CYAN_COLOR}using docker-compose${DEFAULT_COLOR} container"
-LATEST_JAR="$latestJar" docker-compose up -d --build
+LATEST_JAR="$latestJar" YEAR="2020" MONTH="11" docker-compose up -d --build

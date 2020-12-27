@@ -6,4 +6,4 @@ RUN         echo "$LATEST_JAR"
 RUN         echo "$JAR_FILE"
 COPY        ${JAR_FILE} app.jar
 ENV         TZ Asia/Seoul
-ENTRYPOINT  ["java", "-jar", "-Dspring.profiles.active=prod", "./app.jar"]
+ENTRYPOINT  ["java", "-jar", "-Dspring.profiles.active=prod", "./app.jar", "--crawl.year=${YEAR}", "--crawl.year=${MONTH}"]

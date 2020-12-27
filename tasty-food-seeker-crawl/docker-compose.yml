@@ -50,6 +50,8 @@ services:
       dockerfile: Dockerfile
       args:
         - LATEST_JAR=${LATEST_JAR}
+        - YEAR=${YEAR}
+        - MONTH=${MONTH}
     image: tasty_food_seeker_crawl:latest
     ports:
       - 30580:8080
