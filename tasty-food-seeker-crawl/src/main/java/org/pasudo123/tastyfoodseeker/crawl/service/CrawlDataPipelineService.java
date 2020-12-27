@@ -22,7 +22,7 @@ public class CrawlDataPipelineService {
     private final RestaurantSaveService restaurantSaveService;
 
     /**
-     * (1) api 조회
+     * (1) naver api 조회
      * (2) 조회된 결과와 가장 유사한 주소 결과를 1:1 매칭
      * (3) 엔티티로 변환
      * (4) save 수행토록 설정

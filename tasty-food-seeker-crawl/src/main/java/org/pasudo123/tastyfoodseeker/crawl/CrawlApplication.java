@@ -2,6 +2,7 @@ package org.pasudo123.tastyfoodseeker.crawl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.pasudo123.tastyfoodseeker.crawl.component.TastyFoodSeekExplorer;
+import org.pasudo123.tastyfoodseeker.slack.message.SlackMessenger;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,13 +30,14 @@ public class CrawlApplication {
 	}
 
 	@Bean
-	public ApplicationRunner applicationRunner(final TastyFoodSeekExplorer explorer) {
+	public ApplicationRunner applicationRunner(final TastyFoodSeekExplorer explorer,
+											   final SlackMessenger slackMessenger) {
 		return args -> {
 			final int year = Integer.parseInt(args.getOptionValues(OPT_YEAR).get(0));
 			final int month = Integer.parseInt(args.getOptionValues(OPT_MONTH).get(0));
 			log.info("=============================");
 			log.info(":: crawling date :: {}", String.format("%4d/%2d", year, month));
 			log.info("=============================\n");
-		};
+			explorer.doExploring(year, month);		};
 	}
 }

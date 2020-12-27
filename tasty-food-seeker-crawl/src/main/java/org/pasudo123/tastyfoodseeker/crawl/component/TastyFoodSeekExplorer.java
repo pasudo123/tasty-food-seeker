@@ -5,14 +5,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.pasudo123.tastyfoodseeker.crawl.constants.TastyFoodSeekAddress;
 import org.pasudo123.tastyfoodseeker.crawl.constants.TastyFoodSeekXPath;
 import org.pasudo123.tastyfoodseeker.crawl.exception.WebDriverInitializeException;
 import org.pasudo123.tastyfoodseeker.crawl.exception.code.ErrorCode;
+import org.pasudo123.tastyfoodseeker.crawl.noti.CrawlEventCode;
+import org.pasudo123.tastyfoodseeker.crawl.noti.NotificationService;
 import org.pasudo123.tastyfoodseeker.util.WebDriverGenerator;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
@@ -20,12 +25,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RequiredArgsConstructor
 public class TastyFoodSeekExplorer {
 
-    private static final String CRAWL_URL = "http://opengov.seoul.go.kr/expense/seoul";
     private static final int INIT_PAGE = 1;
     private final AtomicInteger currentPage = new AtomicInteger(INIT_PAGE);
     private final WebDriverGenerator generator;
     private final TastyFoodSeekerValidator validator;
     private final TastyFoodSeekCrawler crawler;
+    private final NotificationService notificationService;
 
     private WebDriver webDriver;
 
@@ -41,9 +46,21 @@ public class TastyFoodSeekExplorer {
         this.selectYearAndMonth(year, month);
         this.searchBtnClick();
 
+        final Set<String> store = new HashSet<>();
+
         // 다음 페이지로 이동여부 확인
         while(this.isNextPage()) {
-            log.info("current viewing page : {}", webDriver.getCurrentUrl());
+            final String currentPage = webDriver.getCurrentUrl();
+            log.info("current viewing page : {}", currentPage);
+
+            if(store.contains(currentPage)) {
+                notificationService.toPost(
+                        String.format("해당 %s 는 이전에 한번 탐색되었던 주소입니다.\n다음 페이지로 넘어갑니다.", webDriver.getCurrentUrl()),
+                        CrawlEventCode.DUPLICATE_PARENT_URL_ERROR);
+                break;
+            }
+
+            store.add(currentPage);
             final String currentViewingPageUrl = webDriver.getCurrentUrl();
             crawler.doCrawl(webDriver, currentViewingPageUrl);
         }
@@ -56,7 +73,7 @@ public class TastyFoodSeekExplorer {
     }
 
     private void openBrowser() {
-        webDriver.get(CRAWL_URL);
+        webDriver.get(TastyFoodSeekAddress.HOST);
     }
 
     public void closeAndQuitBrowser() {
