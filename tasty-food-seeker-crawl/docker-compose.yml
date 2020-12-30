@@ -1,17 +1,5 @@
 version: "3"
 services:
-  tasty-food-seeker-storage:
-    image: library/mysql:8.0
-    environment:
-      MYSQL_DATABASE: tasty-food-seeker
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_ROOT_HOST: '%'
-    ports:
-      - 30666:3306
-    container_name: tasty_food_seeker_storage
-    cap_add:
-      - SYS_NICE
-
   selenium-hub:
     image: selenium/hub
     ports:
@@ -44,7 +32,6 @@ services:
   tasty-food-seeker-crawl:
     depends_on:
       - tasty-food-seeker-chrome
-      - tasty-food-seeker-storage
     build:
       context: .
       dockerfile: Dockerfile

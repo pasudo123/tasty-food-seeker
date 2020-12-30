@@ -5,7 +5,6 @@ ARG         YEAR
 ARG         MONTH
 ARG         JAR_FILE=build/libs/${LATEST_JAR}
 RUN         echo "$LATEST_JAR, $YEAR, $MONTH"
-#COPY        script/app_run.sh run.sh
 COPY        ${JAR_FILE} app.jar
 ENV         TZ Asia/Seoul
 ENV         PARAM_YEAR=$YEAR

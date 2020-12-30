@@ -11,8 +11,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import java.util.Arrays;
-
 @Slf4j
 @SpringBootApplication
 @ComponentScan(value = {"org.pasudo123.tastyfoodseeker.*"})
@@ -31,13 +29,20 @@ public class CrawlApplication {
 	}
 
 	@Bean
-	public ApplicationRunner applicationRunner(final TastyFoodSeekExplorer explorer) {
+	public ApplicationRunner applicationRunner(final TastyFoodSeekExplorer explorer, final SlackMessenger slackMessenger) {
+
+		final String line = "=============================";
+
 		return args -> {
+
 			final int year = Integer.parseInt(args.getOptionValues(OPT_YEAR).get(0));
 			final int month = Integer.parseInt(args.getOptionValues(OPT_MONTH).get(0));
-			log.info("=============================");
-			log.info(":: crawling date :: {}", String.format("%4d/%2d", year, month));
-			log.info("=============================\n");
+			final String crawlParam = String.format(":: crawling date :: %4d . %d", year, month);
+
+			log.info(line);
+			log.info(crawlParam);
+			log.info(line.concat("\n"));
+			slackMessenger.postMessage(line.concat("\n").concat(crawlParam).concat("\n").concat(line));
 			explorer.doExploring(year, month);
 		};
 	}
