@@ -42,6 +42,11 @@ services:
     image: tasty_food_seeker_crawl:latest
     ports:
       - 30580:8080
-    networks:
-      - default                                 # default 네트워크 추가 : 호스트 내 컨테이너 간 통신 (포트포워딩하지 않음)
     container_name: tasty_food_seeker_crawl
+
+
+# using pre-existed user defined network
+networks:
+  default:
+    external:
+      name: tasty-food-seeker-network
