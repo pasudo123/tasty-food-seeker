@@ -15,6 +15,11 @@ public class RestaurantFetchService {
 
     private final RestaurantRepository restaurantRepository;
 
+    public Boolean isExistRestaurantByHash(final String hash) {
+        return restaurantRepository.findBySha256Hash(hash)
+                .isPresent();
+    }
+
     public Optional<Restaurant> findRestaurantByHash(final Restaurant restaurant) {
         return restaurantRepository.findBySha256Hash(restaurant.getSha256Hash());
     }

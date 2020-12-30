@@ -65,7 +65,7 @@ public class Restaurant {
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    private String getSha256Hash(final String name, final String address) {
+    public static String getSha256Hash(final String name, final String address) {
         final String concatString = name.concat(address);
         return Hashing.sha256().
                 hashString(concatString, StandardCharsets.UTF_8)
