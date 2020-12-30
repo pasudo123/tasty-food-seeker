@@ -11,6 +11,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Slf4j
 @SpringBootApplication
 @ComponentScan(value = {"org.pasudo123.tastyfoodseeker.*"})
@@ -38,11 +41,19 @@ public class CrawlApplication {
 			final int year = Integer.parseInt(args.getOptionValues(OPT_YEAR).get(0));
 			final int month = Integer.parseInt(args.getOptionValues(OPT_MONTH).get(0));
 			final String crawlParam = String.format(":: crawling date :: %4d . %d", year, month);
+			final String execDate = String.format(":: execution at : %s", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
 			log.info(line);
 			log.info(crawlParam);
+			log.info(execDate);
 			log.info(line.concat("\n"));
-			slackMessenger.postMessage(line.concat("\n").concat(crawlParam).concat("\n").concat(line));
+
+			slackMessenger.postMessage(
+					line.concat("\n")
+					.concat(crawlParam).concat("\n")
+					.concat(execDate).concat("\n")
+					.concat(line));
+
 			explorer.doExploring(year, month);
 		};
 	}
