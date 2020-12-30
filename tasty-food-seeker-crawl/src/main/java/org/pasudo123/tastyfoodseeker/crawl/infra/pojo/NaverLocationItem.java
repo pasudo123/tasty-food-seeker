@@ -37,6 +37,14 @@ public class NaverLocationItem {
     }
 
     /**
+     * 너무 긴 주소값 여부
+     */
+    public boolean isNormalLengthAddress() {
+        return address.length() < 200
+                && roadAddress.length() < 200;
+    }
+
+    /**
      * 서울지역 여부
      */
     public boolean isSeoulLocation() {

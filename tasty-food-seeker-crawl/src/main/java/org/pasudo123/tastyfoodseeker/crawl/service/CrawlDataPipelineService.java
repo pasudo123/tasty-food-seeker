@@ -46,6 +46,7 @@ public class CrawlDataPipelineService {
         for(UsageLocationInfo info : usageLocationInfos) {
             naverLocationSearchClient.getLocationInfoByApi(info.getName())
                     .flatMap(naverLocationItems -> naverLocationItems.findClosestAddressByInfo(info))
+                    .filter(NaverLocationItem::isNormalLengthAddress)
                     .filter(NaverLocationItem::isSeoulLocation)
                     .filter(NaverLocationItem::isRestaurant)
                     .ifPresent(naverLocationItem -> {

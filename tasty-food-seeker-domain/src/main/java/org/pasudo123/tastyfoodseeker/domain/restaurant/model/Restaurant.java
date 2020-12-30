@@ -37,10 +37,10 @@ public class Restaurant {
     @Column(name = "gu", columnDefinition = "VARCHAR(50)", nullable = false)
     private Gu gu;
 
-    @Column(name = "address", columnDefinition = "VARCHAR(100)", nullable = false)
+    @Column(name = "address", columnDefinition = "VARCHAR(512)", nullable = false)
     private String address = Strings.EMPTY;
 
-    @Column(name = "road_address", columnDefinition = "VARCHAR(100)", nullable = false)
+    @Column(name = "road_address", columnDefinition = "VARCHAR(512)", nullable = false)
     private String roadAddress = Strings.EMPTY;
 
     @Column(name = "additional_info", columnDefinition = "TEXT", nullable = false)
