@@ -30,3 +30,33 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-webflux'
 	compile 'org.projectreactor:reactor-spring:1.0.1.RELEASE'
 }
+
+import org.gradle.internal.os.OperatingSystem;
+
+task runNpmDev {
+	group "vue"
+	description "npm run dev"
+
+	doLast {
+		if (OperatingSystem.current().isWindows()) {
+			exec {
+				workingDir "./frontend"
+				commandLine "cmd", "/c", "npm run dev"
+			}
+		}
+	}
+}
+
+task buildNpmProd {
+	group "vue"
+	description "npm build on vue product"
+
+	doLast {
+		if (OperatingSystem.current().isWindows()) {
+			exec {
+				workingDir "./frontend"
+				commandLine "cmd", "/c", "npm run build"
+			}
+		}
+	}
+}
