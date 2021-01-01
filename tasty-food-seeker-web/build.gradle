@@ -49,10 +49,12 @@ task runNpmDev {
 
 task buildNpmProd {
 	group "vue"
-	description "npm build on vue product"
 
 	doLast {
 		if (OperatingSystem.current().isWindows()) {
+			println "=================================="
+			println "==   npm build on vue product   =="
+			println "=================================="
 			exec {
 				workingDir "./frontend"
 				commandLine "cmd", "/c", "npm run build"

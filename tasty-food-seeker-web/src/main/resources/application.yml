@@ -41,3 +41,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     platform: mysql
 
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    hibernate:
+      ddl-auto: validate
+    generate-ddl: false
+    show-sql: false
+    properties.hibernate.format_sql: false
+    open-in-view: false
+
