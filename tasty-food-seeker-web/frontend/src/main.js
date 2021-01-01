@@ -17,7 +17,6 @@ Vue.config.productionTip = false
 
 NAVER_MAP.createNaverMapScript('sesxh1guj9');
 
-
 new Vue({
   render: h => h(App),
   router: Router,
