@@ -1,17 +1,6 @@
 version: "3"
 services:
-  tasty-food-seeker-reverse-proxy:
-    build:
-      context: ./proxy  # directory :: ./proxy
-      dockerfile: Dockerfile
-    image: tasty_food_seeker_reverse_proxy:latest
-    ports:
-      - 31080:80
-    container_name: tasty_food_seeker_reverse_proxy
-
   tasty-food-seeker-web:
-    depends_on:
-      - tasty-food-seeker-reverse-proxy
     build:
       context: .
       dockerfile: Dockerfile
