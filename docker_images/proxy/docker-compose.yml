@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  tasty-food-seeker-proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tasty-food-seeker-proxy:latest
+    restart: unless-stopped
+    ports:
+      - 32333:80
+      - 32433:443
+    volumes:
+      - ./conf.d/product.conf:/etc/nginx/conf.d/product.conf
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    container_name: tasty_food_seeker_proxy
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  tasty-food-seeker-certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    container_name: tasty_food_seeker_certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+networks:
+  default:
+    external:
+      name: tasty-food-seeker-network
