@@ -14,21 +14,15 @@ bootJar {
 }
 
 dependencies {
-
-
-    implementation 'junit:junit:4.12'
     implementation project(":tasty-food-seeker-domain")
 
+    implementation 'junit:junit:4.12'
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.springframework.boot:spring-boot-starter-freemarker'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	// hot reload : vue 로 전환하면서 필요없음.
-	// developmentOnly "org.springframework.boot:spring-boot-devtools"
-
 	// [reactive programming]
 	compile 'org.springframework.boot:spring-boot-starter-webflux'
-	compile 'org.projectreactor:reactor-spring:1.0.1.RELEASE'
 }
 
 import org.gradle.internal.os.OperatingSystem;

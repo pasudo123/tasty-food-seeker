@@ -6,7 +6,6 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item :active=navExplore @click="goto('Explore')" >살펴보기</b-nav-item>
-<!--          <b-nav-item :active=navMap @click="goto('Map')">지도</b-nav-item>-->
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -51,18 +50,30 @@
 </script>
 
 <style>
-  #app {
-    margin: 0 auto;
-    width: 880px;
-    text-align: center;
-  }
-
   .brandTitle {
     cursor: pointer;
   }
 </style>
 
-<style scoped>
+<style>
+  /* Mobile 화면 기준 */
+  @media screen and (max-width: 880px) {
+    #app {
+      margin: 0 auto;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  /* PC 화면 기준 */
+  @media screen and (min-width: 881px) {
+    #app {
+      margin: 0 auto;
+      width: 880px;
+      text-align: center;
+    }
+  }
+
   .activeContainer {
     margin-top: 10px;
   }

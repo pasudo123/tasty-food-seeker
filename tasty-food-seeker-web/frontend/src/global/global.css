@@ -3,3 +3,8 @@
 body {
     font-family: 'Nanum Myeongjo', 'Nanum Gothic', sans-serif;
 }
+
+:root {
+    --mobile-max-width: 880px;
+    --pc-min-width: 881px;
+}

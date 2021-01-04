@@ -32,9 +32,11 @@
 </script>
 
 <style lang="scss">
+
   #home {
     .avatarWrapper {
       margin: 40px 0 0 0;
+
       .myAvatar {
         border: 2px solid #2a2a2a;
       }
@@ -55,4 +57,19 @@
       }
     }
   }
+
+  /* Mobile 화면 기준 */
+  @media screen and (max-width: 880px) {
+    .myAvatar {
+      width: 90px !important;
+      height: 90px !important;
+    }
+
+    .introWrapper {
+      font-size: 15px;
+    }
+  }
+
+  /* PC 화면 기준 */
+  @media screen and (min-width: 881px) {}
 </style>

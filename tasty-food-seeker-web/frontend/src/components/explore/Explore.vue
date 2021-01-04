@@ -74,6 +74,7 @@
         fetchBtnLoading: false,
         fetchTableLoading: false,
         selected: 'ALL',
+        tableFields: [],
         locationOptions: [
           {text: '전체', value: 'ALL'},
           {text: '종로구', value: 'JONGNO_GU'},
@@ -105,7 +106,11 @@
       }
     },
     computed: {
-      ...exploreMapGetters(['historyInfos', 'currentLocationItems', 'tableFields'])
+      ...exploreMapGetters([
+            'historyInfos',
+            'currentLocationItems',
+            'tableFieldsOnPc',
+            'tableFieldsOnMobile']),
     },
     methods: {
       ...exploreMapActions(['fetchLocationByGu']),
@@ -156,11 +161,18 @@
           params.currentPage = this.currentPage;
           this.setHistoryInfos(params);
         })
+      },
+
+      handleWindowSize() {
+        this.tableFields = (window.innerWidth >= 860)
+            ? this.tableFieldsOnPc
+            : this.tableFieldsOnMobile;
       }
     },
     created() {
+      this.handleWindowSize();
 
-      // 이전 페이지 정보 여부 확인
+      // 이전 페이지 정보 여부 확인 : 다시 화면을 세팅하기 위함
       if (Object.keys(this.historyInfos).length !== 0) {
         this.selected = this.historyInfos.selected;
         this.changeCurrentPage(this.historyInfos.currentPage);
@@ -169,6 +181,13 @@
       }
 
       this.exploreTastyLocation();
+    },
+
+    mounted() {
+      window.addEventListener('resize', this.handleWindowSize, {passive: true});
+    },
+    beforeDestroy() {
+      window.removeEventListener('resize', this.handleWindowSize, false);
     }
   }
 </script>

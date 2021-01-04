@@ -28,7 +28,7 @@
                @row-selected="onRowSelected"
                :select-mode="'single'"
                :head-variant="'dark'"
-               :fields="this.blogTableFields"
+               :fields="this.blogFields"
                :items="this.currentBlogItems">
         <template #cell(index)="data">
           {{ (data.index + 1) }}
@@ -73,10 +73,15 @@
           lat: 37,
           lng: 126
         },
+        blogFields: []
       }
     },
     computed: {
-      ...exploreMapGetters(['currentLocationItem', 'currentBlogItems', 'blogTableFields'])
+      ...exploreMapGetters([
+          'currentLocationItem',
+        'currentBlogItems',
+        'blogTableFields',
+        'blogTableFieldsOnMobile'])
     },
     methods: {
       ...exploreMapActions(['fetchOneLocationById']),
@@ -98,10 +103,16 @@
       },
       backToExplore(event) {
         history.back();
-        // console.debug(event);
+      },
+      handleWindowSize() {
+        this.blogFields = (window.innerWidth >= 860)
+            ? this.blogTableFields
+            : this.blogTableFieldsOnMobile;
       }
     },
     mounted() {
+      this.handleWindowSize();
+      window.addEventListener('resize', this.handleWindowSize, {passive: true});
       this.mapLoading = true;
       this.$nextTick(() => {
         this.naverMapInit();
@@ -109,60 +120,108 @@
       });
     },
     beforeDestroy() {
+      window.removeEventListener('resize', this.handleWindowSize, false);
       this.map = null;
     }
   }
 </script>
 
 <style lang="scss">
-  #exploreDetail {
-    .headerWrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+  /* PC 화면 기준 */
+  @media screen and (min-width: 881px) {
+    #exploreDetail {
+      .headerWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-      .titleWrapper {
-        padding: 5px 0 10px 3px;
-        text-align: left;
+        .titleWrapper {
+          padding: 5px 0 10px 3px;
+          text-align: left;
 
-        .categoryText {
-          padding: 0 0 5px 0;
+          .categoryText {
+            padding: 0 0 5px 0;
+          }
+
+          .titleText {
+            font-weight: 1000;
+          }
         }
 
-        .titleText {
-          font-weight: 1000;
+        .backBtnWrapper {
+          .backBtn {
+            width: 100px;
+            height: 40px;
+          }
         }
       }
 
-      .backBtnWrapper {
-        .backBtn {
-          width: 100px;
-          height: 40px;
-        }
+      #current-map-container {
+        width: 100%;
+        border: 2px solid darkslategray;
+      }
+
+      .blogItemsWrapper {
+        margin: 10px 0 0 0;
+      }
+
+      div.titleDiv {
+        width: 390px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      div.descDiv {
+        width: 390px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
       }
     }
+  }
 
-    #current-map-container {
-      width: 100%;
-      border: 2px solid darkslategray;
-    }
+  /* Mobile 화면 기준 */
+  @media screen and (max-width: 880px) {
+    #exploreDetail {
+      .headerWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-    .blogItemsWrapper {
-      margin: 10px 0 0 0;
-    }
+        .titleWrapper {
+          padding: 5px 0 10px 3px;
+          text-align: left;
 
-    div.titleDiv {
-      width: 390px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
+          .categoryText {
+            padding: 0 0 5px 0;
+          }
 
-    div.descDiv {
-      width: 390px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
+          .titleText {
+            font-weight: 1000;
+          }
+        }
+
+        .backBtnWrapper {
+          .backBtn {
+            font-size: 13px;
+            width: 80px;
+            height: 40px;
+          }
+        }
+      }
+
+      #current-map-container {
+        border: 1px solid darkslategray;
+        #custom-naver-map {
+          width: 100%;
+          height: 300px !important;
+        }
+      }
+
+      div.titleDiv {
+        text-align: center;
+      }
     }
   }
 </style>

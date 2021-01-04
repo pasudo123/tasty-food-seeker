@@ -2,11 +2,16 @@ import request from '../../util/request'
 
 const state = {
     historyInfos: {},
-    tableFields: [
+    tableFieldsOnPc: [
         { key: 'index', label: '#', thClass: 'indexTh'},
         { key: 'name', label: '가게명', thClass: 'nameTh'},
         { key: 'category', label: '분류', thClass: 'categoryTh'},
         { key: 'roadAddress', label: '주소'},
+        { key: 'detail', label: '상세', thClass: 'moreTh', tdClass: 'moreTd' }
+    ],
+    tableFieldsOnMobile: [
+        { key: 'name', label: '가게명', thClass: 'nameTh'},
+        { key: 'category', label: '분류', thClass: 'categoryTh'},
         { key: 'detail', label: '상세', thClass: 'moreTh', tdClass: 'moreTd' }
     ],
     currentLocationItems: {
@@ -20,16 +25,21 @@ const state = {
         { key: 'index', label: '#', thClass: 'indexTh'},
         { key: 'title', label: '제목', thClass: 'titleTh', sortable: true},
         { key: 'desc', label: '설명', thClass: 'descTh'},
+    ],
+    blogTableFieldsOnMobile: [
+        { key: 'title', label: '제목', thClass: 'titleTh', sortable: true},
     ]
 }
 
 const getters = {
     historyInfos: (state) => state.historyInfos,
-    tableFields: (state) => state.tableFields,
+    tableFieldsOnPc: (state) => state.tableFieldsOnPc,
+    tableFieldsOnMobile: (state) => state.tableFieldsOnMobile,
     currentLocationItems: (state) => state.currentLocationItems,
     currentLocationItem: (state) => state.currentLocationItem,
     currentBlogItems: (state) => state.currentBlogItems,
-    blogTableFields: (state) => state.blogTableFields
+    blogTableFields: (state) => state.blogTableFields,
+    blogTableFieldsOnMobile: (state) => state.blogTableFieldsOnMobile
 }
 
 const actions = {
