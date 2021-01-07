@@ -1,9 +1,10 @@
-package org.pasudo123.tastyfoodseeker.web.restaurant.service;
+package org.pasudo123.tastyfoodseeker.web.restaurant.service.fetch;
 
 import lombok.RequiredArgsConstructor;
 import org.pasudo123.tastyfoodseeker.web.infra.NaverBlogSearchClient;
 import org.pasudo123.tastyfoodseeker.web.infra.pojo.blog.NaverBlogItems;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantBlogResponseDtos;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 public class RestaurantBlogFetchService {
 
     private final NaverBlogSearchClient blogSearchClient;
-
+    
     public RestaurantBlogResponseDtos fetchListByName(final String name) {
         final Optional<NaverBlogItems> blogItemsOptional = blogSearchClient.getBlogsByApi(name);
         return new RestaurantBlogResponseDtos(blogItemsOptional);

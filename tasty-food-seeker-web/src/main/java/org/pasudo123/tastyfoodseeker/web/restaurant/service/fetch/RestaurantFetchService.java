@@ -1,4 +1,4 @@
-package org.pasudo123.tastyfoodseeker.web.restaurant.service;
+package org.pasudo123.tastyfoodseeker.web.restaurant.service.fetch;
 
 import lombok.RequiredArgsConstructor;
 import org.pasudo123.tastyfoodseeker.domain.restaurant.model.Gu;
@@ -10,6 +10,7 @@ import org.pasudo123.tastyfoodseeker.web.restaurant.dto.PageRequestDto;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseDto;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantResponseDtos;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.RestaurantLatLngResponseDto;
+import org.pasudo123.tastyfoodseeker.web.restaurant.service.RestaurantConvertService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

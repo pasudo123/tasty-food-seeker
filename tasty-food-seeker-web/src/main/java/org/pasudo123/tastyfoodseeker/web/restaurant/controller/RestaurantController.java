@@ -2,8 +2,8 @@ package org.pasudo123.tastyfoodseeker.web.restaurant.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.pasudo123.tastyfoodseeker.web.restaurant.dto.*;
-import org.pasudo123.tastyfoodseeker.web.restaurant.service.RestaurantBlogFetchService;
-import org.pasudo123.tastyfoodseeker.web.restaurant.service.RestaurantFetchService;
+import org.pasudo123.tastyfoodseeker.web.restaurant.service.fetch.RestaurantBlogFetchService;
+import org.pasudo123.tastyfoodseeker.web.restaurant.service.fetch.RestaurantFetchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
