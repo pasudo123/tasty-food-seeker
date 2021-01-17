@@ -9,56 +9,56 @@ on:
       - release/web/**
 
 jobs:
-  build:
-    name: build & scp
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up timezone seoul
-        uses: zcong1993/setup-timezone@master
-        with:
-          timezone: Asia/Seoul
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-          java-package: jdk
-          architecture: x64
-
-      - name: Set up node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '12'
-          check-latest: true
-
-      - name: npm build
-        working-directory: ./tasty-food-seeker-web/frontend
-        run: |
-          npm install
-          npm run build
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew :tasty-food-seeker-web:bootJar
-
-      - name: scp jar to remote server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}         # using the git repository settings tab menu.
-          port: ${{ secrets.PORT }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          source: ./tasty-food-seeker-web/build/libs/
-          target: /volume1/docker/tasty-food-seeker/tasty-food-seeker-web/build/libs/
-          rm: true
-          strip_components: 4 # ., tasty-food-seeker-web, build, libs 는 target 으로 복사하지 않음
+#  build:
+#    name: build & scp
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#
+#      - name: Set up timezone seoul
+#        uses: zcong1993/setup-timezone@master
+#        with:
+#          timezone: Asia/Seoul
+#
+#      - name: Set up JDK 11
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 11
+#          java-package: jdk
+#          architecture: x64
+#
+#      - name: Set up node
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: '12'
+#          check-latest: true
+#
+#      - name: npm build
+#        working-directory: ./tasty-food-seeker-web/frontend
+#        run: |
+#          npm install
+#          npm run build
+#
+#      - name: Grant execute permission for gradlew
+#        run: chmod +x gradlew
+#
+#      - name: Build with Gradle
+#        run: ./gradlew :tasty-food-seeker-web:bootJar
+#
+#      - name: scp jar to remote server
+#        uses: appleboy/scp-action@master
+#        with:
+#          host: ${{ secrets.HOST }}         # using the git repository settings tab menu.
+#          port: ${{ secrets.PORT }}
+#          username: ${{ secrets.USERNAME }}
+#          password: ${{ secrets.PASSWORD }}
+#          source: ./tasty-food-seeker-web/build/libs/
+#          target: /volume1/docker/tasty-food-seeker/tasty-food-seeker-web/build/libs/
+#          rm: true
+#          strip_components: 4 # ., tasty-food-seeker-web, build, libs 는 target 으로 복사하지 않음
 
   deploy:
-    needs: build
+#    needs: build
     name: deploy
     runs-on: ubuntu-latest
     steps:
@@ -69,14 +69,12 @@ jobs:
         with:
           host: ${{ secrets.HOST }}         # using the git repository settings tab menu.
           port: ${{ secrets.PORT }}
-          username: ${{ secrets.REMOTE_SSH_USERNAME }}
-          password: ${{ secrets.REMOTE_SSH_PASSWORD }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
           script_stop: true                 # ref https://github.com/nektos/act/issues/112
           script: |
             export PATH=/usr/local/bin:$PATH
             docker -v
             cd /volume1/docker/tasty-food-seeker/tasty-food-seeker-web
-            docker stop tasty_food_seeker_web
-            docker rm tasty_food_seeker_web
-            docker-compose up -d --name
+            docker-compose restart
 
