@@ -15,7 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: create sample file
-        run: touch ./tasty-food-seeker-web/build/libs/sample.txt
+        run: |
+          mkdir -p ./tasty-food-seeker-web/build/libs
+          touch ./tasty-food-seeker-web/build/libs/sample.txt
 
 #      - name: Set up timezone seoul
 #        uses: zcong1993/setup-timezone@master
