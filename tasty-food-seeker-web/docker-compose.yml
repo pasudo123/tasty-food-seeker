@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: tasty_food_seeker_web:latest
+    image: tasty-food-seeker-web:latest
     ports:
       - 31580:8080
     container_name: tasty_food_seeker_web

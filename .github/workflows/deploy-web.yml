@@ -69,12 +69,15 @@ jobs:
         with:
           host: ${{ secrets.HOST }}         # using the git repository settings tab menu.
           port: ${{ secrets.PORT }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          password: ${{ secrets.REMOTE_SSH_PASSWORD }}
           script_stop: true                 # ref https://github.com/nektos/act/issues/112
           script: |
             export PATH=/usr/local/bin:$PATH
             docker -v
             cd /volume1/docker/tasty-food-seeker/tasty-food-seeker-web
-            docker-compose restart
+            docker stop tasty_food_seeker_web
+            docker rm tasty_food_seeker_web
+            docker rmi tasty-food-seeker-web:latest
+            docker-compose up --build -d
 
