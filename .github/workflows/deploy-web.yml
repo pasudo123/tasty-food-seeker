@@ -25,7 +25,7 @@ jobs:
         with:
           java-version: 11
           java-package: jdk
-          architecture: 64bit
+          architecture: x64
 
       - name: npm build
         uses: actions/setup-node@v2
