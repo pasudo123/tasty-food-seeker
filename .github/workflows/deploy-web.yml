@@ -27,11 +27,13 @@ jobs:
           java-package: jdk
           architecture: x64
 
-      - name: npm build
+      - name: Set up node
         uses: actions/setup-node@v2
         with:
           node-version: '12'
           check-latest: true
+
+      - name: npm build
         working-directory: ./tasty-food-seeker-web/frontend
         run: |
           npm install
