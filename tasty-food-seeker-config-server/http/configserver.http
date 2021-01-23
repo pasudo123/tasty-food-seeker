@@ -1,0 +1,2 @@
+# naver properties 획득
+GET localhost:9111/tastyfoodseeker-naver/prod/master

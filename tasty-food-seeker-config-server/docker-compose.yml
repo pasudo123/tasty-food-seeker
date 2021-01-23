@@ -1,0 +1,15 @@
+version: "3"
+services:
+  tasty-food-seeker-config-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tasty-food-seeker-config-server:latest
+    ports:
+      - 31599:9111
+    container_name: tasty_food_seeker_configserver
+
+networks:
+  default:
+    external:
+      name: tasty-food-seeker-network

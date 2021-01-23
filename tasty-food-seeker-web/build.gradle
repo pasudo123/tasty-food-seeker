@@ -23,6 +23,9 @@ dependencies {
 
 	// [reactive programming]
 	compile 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// [spring cloud client]
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 }
 
 import org.gradle.internal.os.OperatingSystem;
