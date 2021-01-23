@@ -37,6 +37,7 @@ out/
 
 ### Custom
 tasty-food-seeker-slack/src/main/resources/application-slack.yml
+**/src/main/resources/application-override.yml
 **/src/main/resources/application-secret.yml
 **/src/main/generated
 **/src/main/resources/static/css/*
