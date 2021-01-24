@@ -30,9 +30,17 @@ spring:
     properties.hibernate.format_sql: false
     open-in-view: false
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
 ---
 spring:
   profiles: prod
+
+  application:
+    name: tastyfoodseeker
 
   datasource:
     url: jdbc:mysql://tasty_food_seeker_storage:3306/tasty-food-seeker?useSSL=false&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=Asia/Seoul
