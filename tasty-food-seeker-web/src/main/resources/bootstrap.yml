@@ -11,7 +11,9 @@ spring:
   profiles: prod
   cloud:
     config:
-      uri: http://tasty_food_seeker_configserver:9111
+      # TODO bridge network 로 연결했는데도 불구하고 안되는 이유
+      # uri: http://tasty_food_seeker_configserver:9111
+      uri: http://172.30.1.24:31599
       label: main
       fail-fast: true
       retry:

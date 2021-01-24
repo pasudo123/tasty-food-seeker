@@ -42,7 +42,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-        # TODO application-secret yml 파일 spring cloud config 사용이 필요함.
       - name: Build with Gradle
         run: ./gradlew :tasty-food-seeker-web:bootJar
 
