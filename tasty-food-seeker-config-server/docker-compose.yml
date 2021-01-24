@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - /docker/tasty-food-seeker/tasty-food-seeker-config-server/override/application-override.yml:/data/etc/application-override.yml
+      - /volume1/docker/tasty-food-seeker/tasty-food-seeker-config-server/override/application-override.yml:/data/etc/application-override.yml
     ports:
       - 31599:9111
     container_name: tasty_food_seeker_configserver
