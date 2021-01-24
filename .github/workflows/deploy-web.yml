@@ -72,7 +72,7 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.REMOTE_SSH_USERNAME }}  # /etc/sudoers 부여
           password: ${{ secrets.REMOTE_SSH_PASSWORD }}
-          script_stop: true                             # ref https://github.com/nektos/act/issues/112
+          script_stop: false                             # ref https://github.com/nektos/act/issues/112
           script: |
             export PATH=/usr/local/bin:$PATH
             docker -v

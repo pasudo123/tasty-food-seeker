@@ -57,9 +57,12 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.REMOTE_SSH_USERNAME }}
           password: ${{ secrets.REMOTE_SSH_PASSWORD }}
-          script_stop: true
+          script_stop: false
           script: |
             export PATH=/usr/local/bin:$PATH
             docker -v
             cd /volume1/docker/tasty-food-seeker/tasty-food-seeker-config-server
+            sudo docker stop tasty_food_seeker_configserver
+            sudo docker rm tasty_food_seeker_configserver
+            sudo docker rmi tasty-food-seeker-configserver:latest
             sudo docker-compose up --build -d
