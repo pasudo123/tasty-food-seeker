@@ -1,0 +1,17 @@
+spring:
+  profiles: prod
+  cloud:
+    config:
+      uri: http://tasty_food_seeker_configserver:9111
+      label: main
+      fail-fast: true
+      retry:
+        initial-interval: 3000
+        max-attempts: 5
+        max-interval: 2000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh

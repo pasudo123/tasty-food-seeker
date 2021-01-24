@@ -37,6 +37,12 @@ subprojects {
         }
     }
 
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
     configurations {
         compileOnly {
             extendsFrom annotationProcessor

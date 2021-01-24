@@ -26,6 +26,11 @@ dependencies {
 
 	// [spring cloud client]
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.retry:spring-retry'
+
+	// [starter-jpa 안에 의존성 존재]
+	// implementation 'org.springframework.boot:spring-boot-starter-aop'
 }
 
 import org.gradle.internal.os.OperatingSystem;
