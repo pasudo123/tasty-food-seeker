@@ -1,10 +1,12 @@
 version: "3"
 services:
   tasty-food-seeker-config-server:
+    image: tasty-food-seeker-config-server:latest
     build:
       context: .
       dockerfile: Dockerfile
-    image: tasty-food-seeker-config-server:latest
+    volumes:
+      - /docker/tasty-food-seeker/tasty-food-seeker-config-server/override/application-override.yml:/data/etc/application-override.yml
     ports:
       - 31599:9111
     container_name: tasty_food_seeker_configserver

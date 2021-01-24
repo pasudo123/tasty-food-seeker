@@ -1,3 +1,18 @@
+task buildVersion {
+	def file = file "${projectDir}/src/main/resources/version.properties"
+	def versionProps = new Properties()
+	versionProps.setProperty("version", "${project.name}-${version}")
+	file.withWriter {versionProps.store(it, null)}
+}
+
+// $ ./gradlew :tasty-food-seeker-config-server:bootJar
+bootJar {
+	dependsOn buildVersion
+	doLast {
+		println "==> ${project.name} bootJar task completed"
+	}
+}
+
 ext {
 	set('springCloudVersion', "Hoxton.SR9")
 }
