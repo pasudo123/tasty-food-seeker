@@ -31,6 +31,10 @@ dependencies {
 
 	// [starter-jpa 안에 의존성 존재]
 	// implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'mysql:mysql-connector-java'
 }
 
 import org.gradle.internal.os.OperatingSystem;
