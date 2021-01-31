@@ -7,6 +7,7 @@ on:
     # 2021-02-05 00:00:00
     # 2021-03-05 00:00:00 ...
     - cron: '0 0 5 * *'
+  workflow_dispatch:
   push:
     branches:
       - release/crawl/**
@@ -46,29 +47,29 @@ jobs:
           rm: true
           strip_components: 4 # ., tasty-food-seeker-crawl, build, libs 는 target 으로 복사하지 않음
 
-    deploy:
-      needs: build
-      name: deploy
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
+  deploy:
+    needs: build
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-        - name: execute remote ssh
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.HOST }}                     # using the git repository settings tab menu.
-            port: ${{ secrets.PORT }}
-            username: ${{ secrets.REMOTE_SSH_USERNAME }}  # /etc/sudoers 부여
-            password: ${{ secrets.REMOTE_SSH_PASSWORD }}
-            script_stop: false
-            # nowmonth 를 통해서 현재 날짜를 할당한다.
-            # script 가장 마지막줄 YEAR=$2021 MONTH=$01 docker-compose up -d --build
-            scrips: |
-              export PATH=/usr/local/bin:$PATH
-              docker -v
-              cd /volume1/docker/tasty-food-seeker/tasty-food-seeker-crawl
-              sudo docker stop tasty_food_seeker_crawl
-              sudo docker rm tasty_food_seeker_crawl
-              sudo docker rmi tasty-food-seeker-crawl:latest
-              nowmonth=$(date +%Y-%m)
-              sudo YEAR=$`date -d "$nowmonth-15 last month" '+%Y'` MONTH=$`date -d "$nowmonth-15 last month" '+%m'` docker-compose up -d --build
+      - name: execute remote ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}                     # using the git repository settings tab menu.
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}  # /etc/sudoers 부여
+          password: ${{ secrets.REMOTE_SSH_PASSWORD }}
+          script_stop: false
+          # nowmonth 를 통해서 현재 날짜를 할당한다.
+          # script 가장 마지막줄 YEAR=$2021 MONTH=$01 docker-compose up -d --build
+          scrips: |
+            export PATH=/usr/local/bin:$PATH
+            docker -v
+            cd /volume1/docker/tasty-food-seeker/tasty-food-seeker-crawl
+            sudo docker stop tasty_food_seeker_crawl
+            sudo docker rm tasty_food_seeker_crawl
+            sudo docker rmi tasty-food-seeker-crawl:latest
+            nowmonth=$(date +%Y-%m)
+            sudo YEAR=$`date -d "$nowmonth-15 last month" '+%Y'` MONTH=$`date -d "$nowmonth-15 last month" '+%m'` docker-compose up -d --build
