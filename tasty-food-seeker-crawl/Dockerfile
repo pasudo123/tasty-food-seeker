@@ -1,11 +1,10 @@
 FROM        adoptopenjdk:11-jre-hotspot
 STOPSIGNAL  SIGTERM
 LABEL       maintainer="pasudo123 <pasudo123@naver.com>"
-ARG         LATEST_JAR
 ARG         YEAR
 ARG         MONTH
-ARG         JAR_FILE=build/libs/${LATEST_JAR}
-RUN         echo "$LATEST_JAR, $YEAR, $MONTH"
+ARG         JAR_FILE=build/libs/*.jar
+RUN         $YEAR, $MONTH"
 COPY        ${JAR_FILE} app.jar
 ENV         TZ Asia/Seoul
 ENV         PARAM_YEAR=$YEAR
