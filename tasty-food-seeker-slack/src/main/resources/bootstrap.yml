@@ -1,0 +1,22 @@
+# dev 환경에서 config server 미설정 시에도 수행될 수 있도록 한다.
+spring:
+  profiles: dev
+  cloud:
+    config:
+      uri: http://localhost:9111
+      label: main
+
+---
+spring:
+  profiles: prod
+  cloud:
+    config:
+      # TODO bridge network 로 연결했는데도 불구하고 안되는 이유
+      # uri: http://tasty_food_seeker_configserver:9111
+      uri: http://172.30.1.24:31599
+      label: main
+      fail-fast: true
+      retry:
+        initial-interval: 3000
+        max-attempts: 5
+        max-interval: 2000

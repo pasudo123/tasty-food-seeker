@@ -65,9 +65,7 @@ jobs:
           username: ${{ secrets.REMOTE_SSH_USERNAME }}  # /etc/sudoers 부여
           password: ${{ secrets.REMOTE_SSH_PASSWORD }}
           script_stop: false
-          # nowmonth 를 통해서 현재 날짜를 할당한다.
-          # script 가장 마지막줄 YEAR=$2021 MONTH=$01 docker-compose up -d --build
-          scrips: |
+          script: |
             export PATH=/usr/local/bin:$PATH
             docker -v
             cd /volume1/docker/tasty-food-seeker/tasty-food-seeker-crawl
@@ -75,4 +73,7 @@ jobs:
             sudo docker rm tasty_food_seeker_crawl
             sudo docker rmi tasty-food-seeker-crawl:latest
             nowmonth=$(date +%Y-%m)
-            sudo YEAR=$`date -d "$nowmonth-15 last month" '+%Y'` MONTH=$`date -d "$nowmonth-15 last month" '+%m'` docker-compose up -d --build
+            sudo YEAR=`date -d "$nowmonth-15 last month" '+%Y'` MONTH=`date -d "$nowmonth-15 last month" '+%m'` docker-compose up -d --build
+
+          # nowmonth 를 통해서 현재 날짜를 할당한다.
+          # script 가장 마지막줄 YEAR=2020 MONTH=12 docker-compose up -d --build

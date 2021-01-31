@@ -4,7 +4,7 @@ LABEL       maintainer="pasudo123 <pasudo123@naver.com>"
 ARG         YEAR
 ARG         MONTH
 ARG         JAR_FILE=build/libs/*.jar
-RUN         $YEAR, $MONTH"
+RUN         echo "${YEAR}, ${MONTH}"
 COPY        ${JAR_FILE} app.jar
 ENV         TZ Asia/Seoul
 ENV         PARAM_YEAR=$YEAR
