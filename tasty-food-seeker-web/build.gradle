@@ -6,6 +6,7 @@ task buildVersion {
 	file.withWriter {versionProps.store(it, null)}
 }
 
+// $ ./gradlew :tasty-food-seeker-web:bootJar
 bootJar {
 	dependsOn buildVersion
 	doLast {
