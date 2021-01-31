@@ -35,7 +35,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew :tasty-food-seeker-web:bootJar
+        run: ./gradlew :tasty-food-seeker-crawl:bootJar
 
       - name: scp jar to remote server
         uses: appleboy/scp-action@master
