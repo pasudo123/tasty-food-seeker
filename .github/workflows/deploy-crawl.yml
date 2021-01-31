@@ -2,6 +2,12 @@
 name: Crawl CD with Gradle
 
 on:
+  schedule:
+    # At 00:00 on day-on-month 5.
+    # 2021-02-05 00:00:00
+    # 2021-03-05 00:00:00 ...
+    - cron: '0 0 5 * *'
+  workflow_dispatch:
   push:
     branches:
       - release/crawl/**
@@ -56,6 +62,8 @@ jobs:
             username: ${{ secrets.REMOTE_SSH_USERNAME }}  # /etc/sudoers 부여
             password: ${{ secrets.REMOTE_SSH_PASSWORD }}
             script_stop: false
+            # nowmonth 를 통해서 현재 날짜를 할당한다.
+            # script 가장 마지막줄 YEAR=$2021 MONTH=$01 docker-compose up -d --build
             scrips: |
               export PATH=/usr/local/bin:$PATH
               docker -v
@@ -63,4 +71,5 @@ jobs:
               sudo docker stop tasty_food_seeker_crawl
               sudo docker rm tasty_food_seeker_crawl
               sudo docker rmi tasty-food-seeker-crawl:latest
-              sudo YEAR=${P_YEAR} MONTH=${P_MONTH} docker-compose up -d --build
+              nowmonth=$(date +%Y-%m)
+              sudo YEAR=$`date -d "$nowmonth-15 last month" '+%Y'` MONTH=$`date -d "$nowmonth-15 last month" '+%m'` docker-compose up -d --build
