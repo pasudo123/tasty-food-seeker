@@ -2,11 +2,11 @@
 name: Crawl CD with Gradle
 
 on:
-  schedule:
+  # schedule:
     # At 00:00 on day-on-month 5.
     # 2021-02-05 00:00:00
     # 2021-03-05 00:00:00 ...
-    - cron: '0 0 5 * *'
+    # - cron: '0 0 5 * *'
   workflow_dispatch:
   push:
     branches:
